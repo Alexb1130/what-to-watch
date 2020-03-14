@@ -12,7 +12,7 @@ const App = props => {
                     <MainPageUi films={films} />
                 </Route>
                 <Route exact path="/movie-page">
-                    <MoviePageUi />
+                    <MoviePageUi films={films} />
                 </Route>
             </Switch>
         </Router>

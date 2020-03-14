@@ -3,15 +3,20 @@ import GenresListUi from './GenresListUi';
 import MoviesListUi from "./MoviesListUi";
 
 const CatalogUi = props => {
-    const {films} = props;
+    const {films, similarList = false} = props;
 
     return (
-        <section className="catalog">
-            <h2 className="catalog__title visually-hidden">Catalog</h2>
+        <section className={`catalog ${similarList ? 'catalog--like-this': ''}`}>
+            {
+                similarList ? <h2 className="catalog__title">More like this</h2> :
+                <h2 className="catalog__title visually-hidden">Catalog</h2>
+            }
 
-            <GenresListUi />
+            {!similarList && <GenresListUi />}
+
             <MoviesListUi films={films} />
         </section>
+
     )
 };
 
