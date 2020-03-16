@@ -21,6 +21,7 @@ class Tabs extends React.Component {
 }
 
 Tabs.propTypes = {
+    film: PropTypes.object,
     films: PropTypes.array,
     tabs: PropTypes.array,
     currentTab: PropTypes.string,

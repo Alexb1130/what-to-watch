@@ -1,26 +1,38 @@
 import React from 'react';
 import MovieCardSmallUi from '../movieCards/MovieCardSmallUi';
+import {observer} from "mobx-react";
+import filmsStore from '../../store/films';
 
+@observer
 class MoviesListUi extends React.Component {
 
     state = {
         activeMovie: null,
     };
 
+    componentDidMount() {
+        filmsStore.getFilms();
+    }
+
     mouseEnterHandle(movie) {
-        this.setState({
-            activeMovie: movie
-        })
+        this.setState({activeMovie: movie})
+    }
+
+    renderFilms() {
+        if(filmsStore.filteredFilms.length) {
+           return filmsStore.filteredFilms.map(film => <MovieCardSmallUi movie={film} key={film.id} mouseEnterHandler={() => this.mouseEnterHandle(film)} />)
+        }
+        if(filmsStore.isNoFilmsSelectedGenre) {
+            return <div>No films is selected category</div>
+        }
+
+        return filmsStore.filmsCopy.map(film => <MovieCardSmallUi movie={film} key={film.id} mouseEnterHandler={() => this.mouseEnterHandle(film)} />)
     }
 
     render() {
-        const { films } = this.props;
-
         return (
             <div className="catalog__movies-list">
-                {films.map(film => (
-                    <MovieCardSmallUi movie={film} key={film.id} mouseEnterHandler={() => this.mouseEnterHandle(film)} />
-                ))}
+                {this.renderFilms()}
             </div>
         )
     }

@@ -1,4 +1,4 @@
-import Utils from './utils';
+import Utils from '../common/utils';
 import React from "react";
 
 const description = {
@@ -26,17 +26,15 @@ const posters = [
 ];
 
 const genres = [
-    `Action`,
-    `Animation`,
-    `Comedy`,
-    `Crime`,
-    `Drama`,
-    `Experimental`,
-    `Fantasy`,
-    `Historical`,
-    `Drama`,
-    `Film`,
-    `Noir Mystery`
+    'Comedies',
+    'Crime',
+    'Documentary',
+    'Dramas',
+    'Horror',
+    'Kids & Family',
+    'Romance',
+    'Sci-Fi',
+    'Thrillers'
 ];
 
 const mounts = {

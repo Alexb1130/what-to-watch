@@ -1,9 +1,13 @@
 import React from 'react';
+import {observer} from "mobx-react";
+import {DEFAULT_GENRE} from '../../common/constants';
+import filmsStore from '../../store/films';
 
+@observer
 class GenresListUi extends React.Component {
 
     state = {
-        selectedGenre: 'All genres',
+        selectedGenre: DEFAULT_GENRE,
         genres: [
             {
                 name: 'All genres',
@@ -22,7 +26,7 @@ class GenresListUi extends React.Component {
                 route: '#'
             },
             {
-                name: 'Dramas',
+                name: 'Drama',
                 route: '#'
             },
             {
@@ -42,18 +46,27 @@ class GenresListUi extends React.Component {
                 route: '#'
             },
             {
-                name: 'Thrillers',
+                name: 'Thriller',
                 route: '#'
             }
         ]
     };
 
+    clickHandler(e, film) {
+        e.preventDefault();
+        this.setState({selectedGenre: film.name}, () => {
+
+            filmsStore.filterByGenre(this.state.selectedGenre);
+        });
+    }
+
     render() {
-        return(
+        return (
             <ul className="catalog__genres-list">
                 {this.state.genres.map((item, i) => (
-                    <li key={item.name + i} className={`catalog__genres-item ${this.state.selectedGenre === item.name && 'catalog__genres-item--active'}`}>
-                        <a href="#" className="catalog__genres-link">
+                    <li key={item.name + i}
+                        className={`catalog__genres-item ${this.state.selectedGenre === item.name && 'catalog__genres-item--active'}`}>
+                        <a href="#" onClick={(e) => this.clickHandler(e, item)} className="catalog__genres-link">
                             {item.name}
                         </a>
                     </li>

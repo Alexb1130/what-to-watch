@@ -35,7 +35,7 @@ class MovieCardSmallUi extends React.Component {
             }}
                      className="small-movie-card catalog__movies-card">
                 <div className="small-movie-card__image">
-                    <img src={`img/${movie.poster}`} alt={movie.name} width="280" height="175"/>
+                    <img src={`${movie.preview_image}`} alt={movie.name} width="280" height="175"/>
                 </div>
                 <h3 className="small-movie-card__title">
                     <Link to="/movie-page" className="small-movie-card__link">
