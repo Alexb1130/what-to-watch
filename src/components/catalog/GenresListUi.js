@@ -1,7 +1,7 @@
 import React from 'react';
 import {observer} from "mobx-react";
 import {DEFAULT_GENRE} from '../../common/constants';
-import filmsStore from '../../store/films';
+import filmsStore from '../../store/filmsStore';
 
 @observer
 class GenresListUi extends React.Component {

@@ -2,13 +2,18 @@ import React from 'react';
 import Logo from '../logo/Logo';
 import TabsTemplate from "../tabs/TabsTemplate";
 import CatalogUi from '../catalog/CatalogUi';
+import { observer } from "mobx-react";
+import filmsStore from "../../store/filmsStore";
+import {withRouter} from 'react-router-dom';
 
+@withRouter
+@observer
 class MoviePageUi extends React.Component {
 
     render() {
-        const {films} = this.props;
-
+        const {films} = filmsStore;
         const similarFilms = films.filter(film => film.genre === films[0].genre);
+        const currentFilm = films.find(({id}) => id.toString() === this.props.match.params.id);
 
         return (
             <>
@@ -33,7 +38,9 @@ class MoviePageUi extends React.Component {
 
                         <div className="movie-card__wrap">
                             <div className="movie-card__desc">
-                                <h2 className="movie-card__title">The Grand Budapest Hotel</h2>
+                                <h2 className="movie-card__title">
+                                    {currentFilm.name}
+                                </h2>
                                 <p className="movie-card__meta">
                                     <span className="movie-card__genre">Drama</span>
                                     <span className="movie-card__year">2014</span>

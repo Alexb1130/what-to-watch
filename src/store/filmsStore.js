@@ -1,10 +1,10 @@
-import { observable, action, computed } from 'mobx';
+import { observable, action } from 'mobx';
 import {DEFAULT_GENRE} from '../common/constants';
 import {createAPI} from '../api';
 
 const api = createAPI();
 
-class Films {
+class FilmsStore {
     @observable films = [];
     @observable filmsCopy = [];
     @observable filmsAll = [];
@@ -39,4 +39,4 @@ class Films {
     }
 }
 
-export default new Films();
+export default new FilmsStore();

@@ -1,7 +1,7 @@
 import React from 'react';
 import MovieCardSmallUi from '../movieCards/MovieCardSmallUi';
 import {observer} from "mobx-react";
-import filmsStore from '../../store/films';
+import filmsStore from '../../store/filmsStore';
 
 @observer
 class MoviesListUi extends React.Component {

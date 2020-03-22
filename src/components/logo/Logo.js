@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link, withRouter} from 'react-router-dom';
+import authorizationStore from '../../store/authorizationStore';
 
 const logoLetters = ['W', 'T', 'W'];
 
@@ -12,7 +13,7 @@ const Logo = withRouter((props) => {
     const {pathname} = props.location;
 
     return <div className="logo">
-        {pathname === '/' ?
+        {pathname === '/' || authorizationStore.isAuthorizationRequired ?
             <a className={`logo__link ${props.modifier || ''}`}>
                 {logoLettersRender}
             </a> :

@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {observer} from "mobx-react";
-import filmsStore from '../../store/films';
+import filmsStore from '../../store/filmsStore';
 
 @observer
 class ShowMoreBtn extends Component {
