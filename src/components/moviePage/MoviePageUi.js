@@ -5,22 +5,30 @@ import CatalogUi from '../catalog/CatalogUi';
 import { observer } from "mobx-react";
 import filmsStore from "../../store/filmsStore";
 import {withRouter} from 'react-router-dom';
+import {Link} from "react-router-dom";
 
 @withRouter
 @observer
 class MoviePageUi extends React.Component {
 
     render() {
-        const {films} = filmsStore;
-        const similarFilms = films.filter(film => film.genre === films[0].genre);
-        const currentFilm = films.find(({id}) => id.toString() === this.props.match.params.id);
+
+        const {films, getCurrentFilm} = filmsStore;
+        const {match} = this.props;
+        const currentFilm = getCurrentFilm(films, match.params.id);
+
+        const similarFilms = films.filter(film => film.genre === currentFilm.genre);
+
+        if(!currentFilm) {
+            return <h1>Loading...</h1>
+        }
 
         return (
             <>
-                <section className="movie-card movie-card--full">
+                <section className="movie-card movie-card--full" style={{backgroundColor: currentFilm.background_color}}>
                     <div className="movie-card__hero">
                         <div className="movie-card__bg">
-                            <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+                            <img src={`${currentFilm.background_image}`} alt={`${currentFilm.name}`}/>
                         </div>
 
                         <h1 className="visually-hidden">WTW</h1>
@@ -31,7 +39,7 @@ class MoviePageUi extends React.Component {
 
                             <div className="user-block">
                                 <div className="user-block__avatar">
-                                    <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
+                                    <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63"/>
                                 </div>
                             </div>
                         </header>
@@ -42,8 +50,8 @@ class MoviePageUi extends React.Component {
                                     {currentFilm.name}
                                 </h2>
                                 <p className="movie-card__meta">
-                                    <span className="movie-card__genre">Drama</span>
-                                    <span className="movie-card__year">2014</span>
+                                    <span className="movie-card__genre">{currentFilm.genre}</span>
+                                    <span className="movie-card__year">{currentFilm.released}</span>
                                 </p>
 
                                 <div className="movie-card__buttons">
@@ -59,7 +67,9 @@ class MoviePageUi extends React.Component {
                                         </svg>
                                         <span>My list</span>
                                     </button>
-                                    <a href="add-review.html" className="btn movie-card__button">Add review</a>
+                                    <Link to={`${currentFilm.id}/review/`} className="btn movie-card__button">
+                                        Add review
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -68,10 +78,10 @@ class MoviePageUi extends React.Component {
                     <div className="movie-card__wrap movie-card__translate-top">
                         <div className="movie-card__info">
                             <div className="movie-card__poster movie-card__poster--big">
-                                <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster"
+                                <img src={currentFilm.poster_image} alt={currentFilm.name}
                                      width="218" height="327"/>
                             </div>
-                            <TabsTemplate film={films[0]}/>
+                            <TabsTemplate film={currentFilm}/>
                         </div>
                     </div>
                 </section>

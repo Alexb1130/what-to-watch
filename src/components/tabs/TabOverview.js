@@ -14,7 +14,7 @@ class TabOverview extends React.Component {
                     </div>
                     <p className="movie-rating__meta">
                         <span className="movie-rating__level">Very good</span>
-                        <span className="movie-rating__count">240 ratings</span>
+                        <span className="movie-rating__count">{film.scores_count} ratings</span>
                     </p>
                 </div>
 
@@ -23,7 +23,7 @@ class TabOverview extends React.Component {
                         {film.description}
                     </p>
 
-                    <p className="movie-card__director"><strong>Director: Wes Andreson</strong></p>
+                    <p className="movie-card__director"><strong>Director: {film.director}</strong></p>
 
                     <p className="movie-card__starring"><strong>Starring: {film.starring.join(', ')} and other</strong></p>
                 </div>

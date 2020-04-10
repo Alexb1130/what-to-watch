@@ -1,9 +1,24 @@
 import React from 'react';
 import Logo from '../logo/Logo';
+import authorizationStore from "../../store/authorizationStore";
+import {Link} from 'react-router-dom'
 
 class CardUi extends React.Component {
 
+    state = {
+        user: null
+    };
+
+    componentDidMount() {
+        authorizationStore.checkAuthorization().then(data => {
+            this.setState({user: data})
+        })
+    }
+
     render() {
+
+        const {user} = this.state;
+
         return (
             <section className="movie-card">
                 <div className="movie-card__bg">
@@ -17,9 +32,13 @@ class CardUi extends React.Component {
                     <Logo />
 
                     <div className="user-block">
-                        <div className="user-block__avatar">
-                            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                        </div>
+                        {
+                            user ?
+                                <div className="user-block__avatar">
+                                    <img src={`https://htmlacademy-react-3.appspot.com${user.avatar_url}`} alt={user.name} width="63" height="63" />
+                                </div> :
+                            <Link to="/login" className="user-block__link">Sign in</Link>
+                        }
                     </div>
                 </header>
 

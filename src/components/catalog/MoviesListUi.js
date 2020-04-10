@@ -10,10 +10,6 @@ class MoviesListUi extends React.Component {
         activeMovie: null,
     };
 
-    componentDidMount() {
-        filmsStore.getFilms();
-    }
-
     mouseEnterHandle(movie) {
         this.setState({activeMovie: movie})
     }

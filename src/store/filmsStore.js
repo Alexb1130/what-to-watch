@@ -10,9 +10,10 @@ class FilmsStore {
     @observable filmsAll = [];
     @observable filteredFilms = [];
     @observable isNoFilmsSelectedGenre = false;
+    @observable currentFilm = null;
 
     @action getFilms() {
-        api.get('films').then(({data}) => {
+        return api.get('films').then(({data}) => {
             this.films = data;
             this.filmsCopy = [...data.slice(0, 8)];
             this.filmsAll = [...data];
@@ -22,6 +23,10 @@ class FilmsStore {
 
     @action updateFilms() {
         this.filmsCopy = [...this.filmsCopy, ...this.filmsAll.splice(0, 4)];
+    }
+
+    @action getCurrentFilm(films, id) {
+        return films.find(film => film.id.toString() === id);
     }
 
     @action filterByGenre(genre) {

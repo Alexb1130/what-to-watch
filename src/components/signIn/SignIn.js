@@ -2,8 +2,12 @@ import React, {Component} from 'react';
 import Logo from "../logo/Logo";
 import FooterUi from "../footer/FooterUi";
 import authorizationStore from "../../store/authorizationStore";
+import {withRouter} from 'react-router-dom'
 
+@withRouter
 class SignIn extends Component {
+
+    history = this.props.history;
 
     submitHandler(event) {
         event.preventDefault();
@@ -15,11 +19,14 @@ class SignIn extends Component {
         };
 
         authorizationStore.authorization(formData)
-            .then(() => form.reset())
+            .then(() => {
+                form.reset();
+                this.history.push('/')
+            })
     }
 
     componentDidMount() {
-        authorizationStore.checkAuthorization()
+        authorizationStore.checkAuthorization();
     }
 
     render() {
