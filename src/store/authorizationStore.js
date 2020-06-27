@@ -3,7 +3,7 @@ import {createAPI} from '../api';
 
 const api = createAPI();
 
-class AuthorizationStore {
+export default class {
     @observable isAuthorizationRequired = true;
 
     @action authorization(data) {
@@ -23,5 +23,3 @@ class AuthorizationStore {
             })
     }
 }
-
-export default new AuthorizationStore();

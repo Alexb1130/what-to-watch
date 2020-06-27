@@ -2,12 +2,11 @@ import React from 'react';
 import Logo from '../logo/Logo';
 import TabsTemplate from "../tabs/TabsTemplate";
 import CatalogUi from '../catalog/CatalogUi';
+import UserBlock from '../userBlock/UserBlockUi';
 import { observer } from "mobx-react";
-import filmsStore from "../../store/filmsStore";
 import {withRouter} from 'react-router-dom';
 import {Link} from "react-router-dom";
-import UserBlock from '../../components/userBlock/UserBlockUi';
-import authorizationStore from "../../store/authorizationStore";
+import { rootStoreContent } from '../../context';
 
 @withRouter
 @observer
@@ -17,15 +16,20 @@ class MoviePageUi extends React.Component {
         user: null
     };
 
+    static contextType = rootStoreContent;
+
+    authorizationStore = this.context.authorizationStore;
+    filmsStore = this.context.filmsStore;
+
     componentDidMount() {
-        authorizationStore.checkAuthorization().then(data => {
+        this.authorizationStore.checkAuthorization().then(data => {
             this.setState({user: data})
         })
     }
 
     render() {
 
-        const {films, getCurrentFilm} = filmsStore;
+        const {films, getCurrentFilm} = this.filmsStore;
         const {match} = this.props;
         const currentFilm = getCurrentFilm(films, match.params.id);
 

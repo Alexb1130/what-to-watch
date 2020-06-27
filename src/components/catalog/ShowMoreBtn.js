@@ -1,15 +1,21 @@
 import React, {Component} from "react";
 import {observer} from "mobx-react";
-import filmsStore from '../../store/filmsStore';
+import { rootStoreContent } from '../../context';
 
 @observer
 class ShowMoreBtn extends Component {
 
+    static contextType = rootStoreContent;
+    filmsStore = this.context.filmsStore;
+
+
     clickHandler() {
-        filmsStore.updateFilms()
+        this.filmsStore.updateFilms()
     }
 
     renderBtn() {
+
+        const filmsStore = this.filmsStore;
 
         if (filmsStore.isNoFilmsSelectedGenre) {
             return null;

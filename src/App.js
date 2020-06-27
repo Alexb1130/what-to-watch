@@ -3,17 +3,21 @@ import {Switch, Route, Redirect, BrowserRouter as Router} from "react-router-dom
 import MainPageUi from './components/mainPage/MainPageUi';
 import MoviePageUi from './components/moviePage/MoviePageUi';
 import SignIn from "./components/signIn/SignIn";
-import authorizationStore from "./store/authorizationStore";
 import { observer } from "mobx-react";
-import filmsStore from "./store/filmsStore";
 import AddReview from "./components/addReview/addReview";
+import { rootStoreContent } from './context';
 
 @observer
 class App extends Component {
 
+    static contextType = rootStoreContent;
+
+    authorizationStore = this.context.authorizationStore;
+    filmsStore = this.context.filmsStore;
+
     componentDidMount() {
-        filmsStore.getFilms();
-        authorizationStore.checkAuthorization()
+        this.filmsStore.getFilms();
+        this.authorizationStore.checkAuthorization()
     }
 
     render() {
@@ -25,7 +29,7 @@ class App extends Component {
                     <Route exact path="/login" component={SignIn} />
                     <Route exact path="/films/:id" component={MoviePageUi} />
                     <Route exact path="/films/:id/review" render={props => {
-                        return authorizationStore.isAuthorizationRequired ? <Redirect to="/login" /> : <AddReview {...props} />
+                        return this.authorizationStore.isAuthorizationRequired ? <Redirect to="/login" /> : <AddReview {...props} />
                     }} />
                 </Switch>
             </Router>

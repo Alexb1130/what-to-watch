@@ -4,7 +4,7 @@ import {createAPI} from '../api';
 
 const api = createAPI();
 
-class FilmsStore {
+export default class {
     @observable films = [];
     @observable filmsCopy = [];
     @observable filmsAll = [];
@@ -43,5 +43,3 @@ class FilmsStore {
         this.filteredFilms = this.films.filter(film => film.genre === genre);
     }
 }
-
-export default new FilmsStore();

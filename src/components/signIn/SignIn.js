@@ -1,13 +1,17 @@
 import React, {Component} from 'react';
 import Logo from "../logo/Logo";
 import FooterUi from "../footer/FooterUi";
-import authorizationStore from "../../store/authorizationStore";
+import { rootStoreContent } from '../../context';
 import {withRouter} from 'react-router-dom'
 
 @withRouter
 class SignIn extends Component {
 
     history = this.props.history;
+
+    static contextType = rootStoreContent;
+
+    authorizationStore = this.context.authorizationStore;
 
     submitHandler(event) {
         event.preventDefault();
@@ -18,7 +22,7 @@ class SignIn extends Component {
             password: form.elements['user-password'].value
         };
 
-        authorizationStore.authorization(formData)
+        this.authorizationStore.authorization(formData)
             .then(() => {
                 form.reset();
                 this.history.push('/')
@@ -26,7 +30,8 @@ class SignIn extends Component {
     }
 
     componentDidMount() {
-        authorizationStore.checkAuthorization();
+        console.log(this.props)
+        this.authorizationStore.checkAuthorization();
     }
 
     render() {

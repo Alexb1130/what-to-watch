@@ -1,10 +1,13 @@
 import React from 'react';
 import MovieCardSmallUi from '../movieCards/MovieCardSmallUi';
 import {observer} from "mobx-react";
-import filmsStore from '../../store/filmsStore';
+import { rootStoreContent } from '../../context';
 
 @observer
 class MoviesListUi extends React.Component {
+
+    static contextType = rootStoreContent;
+    filmsStore = this.context.filmsStore;
 
     state = {
         activeMovie: null,
@@ -15,6 +18,9 @@ class MoviesListUi extends React.Component {
     }
 
     renderFilms() {
+
+        const filmsStore = this.filmsStore;
+
         if(filmsStore.filteredFilms.length) {
            return filmsStore.filteredFilms.map(film => <MovieCardSmallUi movie={film} key={film.id} mouseEnterHandler={() => this.mouseEnterHandle(film)} />)
         }

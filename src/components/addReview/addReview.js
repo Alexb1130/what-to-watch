@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import { observer } from "mobx-react";
-import filmsStore from "../../store/filmsStore";
 import {withRouter} from 'react-router-dom';
 import {createAPI} from "../../api";
-import UserBlock from '../../components/userBlock/UserBlockUi';
-import authorizationStore from "../../store/authorizationStore";
+import { rootStoreContent } from '../../context';
+
+import UserBlock from '../userBlock/UserBlockUi';
 
 const api = createAPI();
 
@@ -16,8 +16,13 @@ class AddReview extends Component {
         user: null
     };
 
+    static contextType = rootStoreContent;
+
+    authorizationStore = this.context.authorizationStore;
+    filmsStore = this.context.filmsStore;
+
     componentDidMount() {
-        authorizationStore.checkAuthorization().then(data => {
+        this.authorizationStore.checkAuthorization().then(data => {
             this.setState({user: data})
         })
     }
@@ -37,7 +42,7 @@ class AddReview extends Component {
 
     render() {
 
-        const {films, getCurrentFilm} = filmsStore;
+        const {films, getCurrentFilm} = this.filmsStore;
         const {match} = this.props;
         const currentFilm = getCurrentFilm(films, match.params.id);
 
