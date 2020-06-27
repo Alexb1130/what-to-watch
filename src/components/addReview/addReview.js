@@ -3,12 +3,24 @@ import { observer } from "mobx-react";
 import filmsStore from "../../store/filmsStore";
 import {withRouter} from 'react-router-dom';
 import {createAPI} from "../../api";
+import UserBlock from '../../components/userBlock/UserBlockUi';
+import authorizationStore from "../../store/authorizationStore";
 
 const api = createAPI();
 
 @withRouter
 @observer
 class AddReview extends Component {
+
+    state = {
+        user: null
+    };
+
+    componentDidMount() {
+        authorizationStore.checkAuthorization().then(data => {
+            this.setState({user: data})
+        })
+    }
 
     onSubmitReview = (e) => {
         e.preventDefault();
@@ -44,7 +56,7 @@ class AddReview extends Component {
 
                     <header className="page-header">
                         <div className="logo">
-                            <a href="main.html" className="logo__link">
+                            <a href="/" className="logo__link">
                                 <span className="logo__letter logo__letter--1">W</span>
                                 <span className="logo__letter logo__letter--2">T</span>
                                 <span className="logo__letter logo__letter--3">W</span>
@@ -62,11 +74,8 @@ class AddReview extends Component {
                             </ul>
                         </nav>
 
-                        <div className="user-block">
-                            <div className="user-block__avatar">
-                                <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-                            </div>
-                        </div>
+                        <UserBlock user={this.state.user} />
+
                     </header>
 
                     <div className="movie-card__poster movie-card__poster--small">

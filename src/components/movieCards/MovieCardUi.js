@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../logo/Logo';
 import authorizationStore from "../../store/authorizationStore";
-import {Link} from 'react-router-dom'
+import UserBlock from '../../components/userBlock/UserBlockUi';
 
 class CardUi extends React.Component {
 
@@ -31,15 +31,7 @@ class CardUi extends React.Component {
 
                     <Logo />
 
-                    <div className="user-block">
-                        {
-                            user ?
-                                <div className="user-block__avatar">
-                                    <img src={`https://htmlacademy-react-3.appspot.com${user.avatar_url}`} alt={user.name} width="63" height="63" />
-                                </div> :
-                            <Link to="/login" className="user-block__link">Sign in</Link>
-                        }
-                    </div>
+                    <UserBlock user={user} />
                 </header>
 
                 <div className="movie-card__wrap">

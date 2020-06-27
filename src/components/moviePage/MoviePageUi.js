@@ -6,10 +6,22 @@ import { observer } from "mobx-react";
 import filmsStore from "../../store/filmsStore";
 import {withRouter} from 'react-router-dom';
 import {Link} from "react-router-dom";
+import UserBlock from '../../components/userBlock/UserBlockUi';
+import authorizationStore from "../../store/authorizationStore";
 
 @withRouter
 @observer
 class MoviePageUi extends React.Component {
+
+    state = {
+        user: null
+    };
+
+    componentDidMount() {
+        authorizationStore.checkAuthorization().then(data => {
+            this.setState({user: data})
+        })
+    }
 
     render() {
 
@@ -37,11 +49,7 @@ class MoviePageUi extends React.Component {
 
                             <Logo/>
 
-                            <div className="user-block">
-                                <div className="user-block__avatar">
-                                    <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-                                </div>
-                            </div>
+                            <UserBlock user={this.state.user} />
                         </header>
 
                         <div className="movie-card__wrap">
