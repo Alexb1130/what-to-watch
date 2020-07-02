@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../logo/Logo';
 import UserBlock from '../../components/userBlock/UserBlockUi';
-import { rootStoreContent } from '../../context';
+import rootStore from '../../store';
 
 class CardUi extends React.Component {
 
@@ -9,9 +9,7 @@ class CardUi extends React.Component {
         user: null
     };
 
-    static contextType = rootStoreContent;
-
-    authorizationStore = this.context.authorizationStore;
+    authorizationStore = rootStore.authorizationStore;
 
     componentDidMount() {
         this.authorizationStore.checkAuthorization().then(data => {

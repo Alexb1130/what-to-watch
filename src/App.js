@@ -5,15 +5,13 @@ import MoviePageUi from './components/moviePage/MoviePageUi';
 import SignIn from "./components/signIn/SignIn";
 import { observer } from "mobx-react";
 import AddReview from "./components/addReview/addReview";
-import { rootStoreContent } from './context';
+import rootStore from './store';
 
 @observer
 class App extends Component {
 
-    static contextType = rootStoreContent;
-
-    authorizationStore = this.context.authorizationStore;
-    filmsStore = this.context.filmsStore;
+    authorizationStore = rootStore.authorizationStore;
+    filmsStore = rootStore.filmsStore;
 
     componentDidMount() {
         this.filmsStore.getFilms();

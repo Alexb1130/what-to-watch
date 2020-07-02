@@ -1,13 +1,11 @@
 import React, {Component} from "react";
 import {observer} from "mobx-react";
-import { rootStoreContent } from '../../context';
+import rootStore from '../../store';
 
 @observer
 class ShowMoreBtn extends Component {
-
-    static contextType = rootStoreContent;
-    filmsStore = this.context.filmsStore;
-
+    
+    filmsStore = rootStore.filmsStore;
 
     clickHandler() {
         this.filmsStore.updateFilms()

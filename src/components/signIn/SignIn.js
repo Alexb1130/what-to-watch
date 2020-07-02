@@ -1,17 +1,15 @@
 import React, {Component} from 'react';
 import Logo from "../logo/Logo";
 import FooterUi from "../footer/FooterUi";
-import { rootStoreContent } from '../../context';
-import {withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom';
+import rootStore from '../../store';
 
 @withRouter
 class SignIn extends Component {
 
     history = this.props.history;
 
-    static contextType = rootStoreContent;
-
-    authorizationStore = this.context.authorizationStore;
+    authorizationStore = rootStore.authorizationStore;
 
     submitHandler(event) {
         event.preventDefault();

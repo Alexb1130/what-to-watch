@@ -14,10 +14,7 @@ class TabReviews extends React.Component {
 
     componentDidMount() {
         api.get(`/comments/${this.props.match.params.id}`)
-            .then(({data}) => {
-                console.log(data)
-                this.setState({rewiews: data})
-            })
+            .then(({data}) => this.setState({rewiews: data}))
     }
 
     rewiewRender(rewiews) {

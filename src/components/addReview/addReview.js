@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { observer } from "mobx-react";
 import {withRouter} from 'react-router-dom';
 import {createAPI} from "../../api";
-import { rootStoreContent } from '../../context';
+import rootStore from '../../store';
 
 import UserBlock from '../userBlock/UserBlockUi';
 
@@ -16,10 +16,8 @@ class AddReview extends Component {
         user: null
     };
 
-    static contextType = rootStoreContent;
-
-    authorizationStore = this.context.authorizationStore;
-    filmsStore = this.context.filmsStore;
+    authorizationStore = rootStore.authorizationStore;
+    filmsStore = rootStore.filmsStore;
 
     componentDidMount() {
         this.authorizationStore.checkAuthorization().then(data => {

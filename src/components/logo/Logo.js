@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link, withRouter} from 'react-router-dom';
-import authorizationStore from '../../store/authorizationStore';
+import rootStore from '../../store';
 
 const logoLetters = ['W', 'T', 'W'];
 
@@ -11,6 +11,7 @@ const logoLettersRender = logoLetters.map((letter, i) => (
 
 const Logo = withRouter((props) => {
     const {pathname} = props.location;
+    const {authorizationStore} = rootStore;
 
     return <div className="logo">
         {pathname === '/' || authorizationStore.isAuthorizationRequired ?

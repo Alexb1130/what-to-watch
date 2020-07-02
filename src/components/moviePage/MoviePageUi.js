@@ -6,7 +6,7 @@ import UserBlock from '../userBlock/UserBlockUi';
 import { observer } from "mobx-react";
 import {withRouter} from 'react-router-dom';
 import {Link} from "react-router-dom";
-import { rootStoreContent } from '../../context';
+import rootStore from '../../store';
 
 @withRouter
 @observer
@@ -16,10 +16,8 @@ class MoviePageUi extends React.Component {
         user: null
     };
 
-    static contextType = rootStoreContent;
-
-    authorizationStore = this.context.authorizationStore;
-    filmsStore = this.context.filmsStore;
+    authorizationStore = rootStore.authorizationStore;
+    filmsStore = rootStore.filmsStore;
 
     componentDidMount() {
         this.authorizationStore.checkAuthorization().then(data => {

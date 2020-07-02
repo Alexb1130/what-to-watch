@@ -4,6 +4,11 @@ import {createAPI} from '../api';
 const api = createAPI();
 
 export default class {
+
+    constructor(rootStore) {
+        this.rootStore = rootStore;
+    }
+
     @observable isAuthorizationRequired = true;
 
     @action authorization(data) {

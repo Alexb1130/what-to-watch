@@ -1,14 +1,12 @@
 import React from 'react';
 import {observer} from "mobx-react";
 import {DEFAULT_GENRE} from '../../common/constants';
-import { rootStoreContent } from '../../context';
+import rootStore from '../../store';
 
 @observer
 class GenresListUi extends React.Component {
 
-    static contextType = rootStoreContent;
-
-    filmsStore = this.context.filmsStore;
+    filmsStore = rootStore.filmsStore;
 
     state = {
         selectedGenre: DEFAULT_GENRE,
