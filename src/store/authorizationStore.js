@@ -1,24 +1,21 @@
 import {observable, action} from 'mobx';
-import {createAPI} from '../api';
-
-const api = createAPI();
-
 export default class {
 
     constructor(rootStore) {
         this.rootStore = rootStore;
+        this.api = this.rootStore.api;
     }
 
     @observable isAuthorizationRequired = true;
 
     @action authorization(data) {
-        return api.post('login', data)
+        return this.api.post('login', data)
             .then(({data}) => {
                 this.isAuthorizationRequired = false
             })
     }
     @action checkAuthorization() {
-        return api.get('login')
+        return this.api.get('login')
             .then(({data}) => {
                 this.isAuthorizationRequired = false;
                 return data;
