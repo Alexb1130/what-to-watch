@@ -12,17 +12,11 @@ import rootStore from '../../store';
 @observer
 class MoviePageUi extends React.Component {
 
-    state = {
-        user: null
-    };
-
-    authorizationStore = rootStore.authorizationStore;
     filmsStore = rootStore.filmsStore;
+    userStore = rootStore.userStore;
 
     componentDidMount() {
-        this.authorizationStore.checkAuthorization().then(data => {
-            this.setState({user: data})
-        })
+        this.userStore.getUser();
     }
 
     render() {
@@ -51,7 +45,7 @@ class MoviePageUi extends React.Component {
 
                             <Logo/>
 
-                            <UserBlock user={this.state.user} />
+                            <UserBlock user={this.userStore.user} />
                         </header>
 
                         <div className="movie-card__wrap">

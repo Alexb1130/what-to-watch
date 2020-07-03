@@ -28,7 +28,6 @@ class SignIn extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props)
         this.authorizationStore.checkAuthorization();
     }
 

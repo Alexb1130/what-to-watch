@@ -1,48 +1,39 @@
 import React, {Component} from 'react';
 import { observer } from "mobx-react";
 import {withRouter} from 'react-router-dom';
-import {createAPI} from "../../api";
 import rootStore from '../../store';
 
 import UserBlock from '../userBlock/UserBlockUi';
-
-const api = createAPI();
 
 @withRouter
 @observer
 class AddReview extends Component {
 
-    state = {
-        user: null
-    };
-
-    authorizationStore = rootStore.authorizationStore;
     filmsStore = rootStore.filmsStore;
+    userStore = rootStore.userStore;
 
     componentDidMount() {
-        this.authorizationStore.checkAuthorization().then(data => {
-            this.setState({user: data})
-        })
+        this.userStore.getUser();
     }
 
     onSubmitReview = (e) => {
         e.preventDefault();
-        const form = e.target;
 
+        const form = e.target;
+        const filmId = this.props.match.params.id;
         const reviewData = {
             rating: parseInt(form.elements.rating.value, 10),
             comment: form.elements['review-text'].value
         }
 
-        api.post(`/comments/${this.props.match.params.id}`, reviewData)
+        this.filmsStore.submitReview(filmId, reviewData)
 
     }
 
     render() {
 
         const {films, getCurrentFilm} = this.filmsStore;
-        const {match} = this.props;
-        const currentFilm = getCurrentFilm(films, match.params.id);
+        const currentFilm = getCurrentFilm(films, this.props.match.params.id);
 
         if(!currentFilm) {
             return <h1>Loading...</h1>
@@ -77,7 +68,7 @@ class AddReview extends Component {
                             </ul>
                         </nav>
 
-                        <UserBlock user={this.state.user} />
+                        <UserBlock user={this.userStore.user} />
 
                     </header>
 

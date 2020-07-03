@@ -24,6 +24,10 @@ export default class {
         });
     }
 
+    @action submitReview(id, reviewData) {
+        this.api.post(`/comments/${id}`, reviewData);
+    }
+
     updateFilms() {
         this.filmsCopy = [...this.filmsCopy, ...this.filmsAll.splice(0, 4)];
     }
