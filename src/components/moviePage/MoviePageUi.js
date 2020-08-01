@@ -65,7 +65,7 @@ class MoviePageUi extends React.Component {
                                         </svg>
                                         <span>Play</span>
                                     </button>
-                                    <button className="btn btn--list movie-card__button" type="button">
+                                    <button onClick={() => this.userStore.addFavorite(currentFilm.id)} className="btn btn--list movie-card__button" type="button">
                                         <svg viewBox="0 0 19 20" width="19" height="20">
                                             <use xlinkHref="#add"></use>
                                         </svg>

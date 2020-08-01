@@ -12,10 +12,6 @@ class AddReview extends Component {
     filmsStore = rootStore.filmsStore;
     userStore = rootStore.userStore;
 
-    componentDidMount() {
-        this.userStore.getUser();
-    }
-
     onSubmitReview = (e) => {
         e.preventDefault();
 

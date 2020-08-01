@@ -5,13 +5,13 @@ import MovieCardUi from "../movieCards/MovieCardUi";
 
 const MainPageUi = () => {
     return (
-        <React.Fragment>
+        <>
             <MovieCardUi />
             <div className="page-content">
                 <CatalogUi />
                 <FooterUi />
             </div>
-        </React.Fragment>
+        </>
     )
 };
 

@@ -12,22 +12,18 @@ class MoviesListUi extends React.Component {
         activeMovie: null,
     };
 
-    mouseEnterHandle(movie) {
-        this.setState({activeMovie: movie})
-    }
-
     renderFilms() {
 
         const filmsStore = this.filmsStore;
 
         if(filmsStore.filteredFilms.length) {
-           return filmsStore.filteredFilms.map(film => <MovieCardSmallUi movie={film} key={film.id} mouseEnterHandler={() => this.mouseEnterHandle(film)} />)
+           return filmsStore.filteredFilms.map(film => <MovieCardSmallUi movie={film} key={film.id} />)
         }
         if(filmsStore.isNoFilmsSelectedGenre) {
             return <div>No films is selected category</div>
         }
 
-        return filmsStore.filmsCopy.map(film => <MovieCardSmallUi movie={film} key={film.id} mouseEnterHandler={() => this.mouseEnterHandle(film)} />)
+        return filmsStore.filmsCopy.map(film => <MovieCardSmallUi movie={film} key={film.id} />)
     }
 
     render() {

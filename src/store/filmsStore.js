@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, computed, action } from 'mobx';
 import {DEFAULT_GENRE} from '../common/constants';
 
 export default class {
@@ -9,6 +9,7 @@ export default class {
     }
 
     @observable films = [];
+    @observable promoFilm = null;
     @observable filmsCopy = [];
     @observable filmsAll = [];
     @observable filteredFilms = [];
@@ -22,6 +23,14 @@ export default class {
             this.filmsAll = [...data];
             this.filmsAll.splice(0, 8);
         });
+    }
+
+    @computed get currentPromoFilm() {
+        return this.promoFilm || {}
+    }
+
+    @action getPromoFilm() {
+        return this.api.get('films/promo').then(({ data }) => this.promoFilm = data)
     }
 
     @action submitReview(id, reviewData) {
