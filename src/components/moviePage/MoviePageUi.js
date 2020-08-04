@@ -3,21 +3,18 @@ import Logo from '../logo/Logo';
 import TabsTemplate from "../tabs/TabsTemplate";
 import CatalogUi from '../catalog/CatalogUi';
 import UserBlock from '../userBlock/UserBlockUi';
-import { observer } from "mobx-react";
+import {observer} from "mobx-react";
 import {withRouter} from 'react-router-dom';
 import {Link} from "react-router-dom";
-import rootStore from '../../store';
+import {withStore} from '../../store';
 
+@withStore
 @withRouter
 @observer
 class MoviePageUi extends React.Component {
 
-    filmsStore = rootStore.filmsStore;
-    userStore = rootStore.userStore;
-
-    componentDidMount() {
-        this.userStore.getUser();
-    }
+    filmsStore = this.props.store.films;
+    userStore = this.props.store.user;
 
     render() {
 
@@ -45,7 +42,7 @@ class MoviePageUi extends React.Component {
 
                             <Logo/>
 
-                            <UserBlock user={this.userStore.user} />
+                            <UserBlock />
                         </header>
 
                         <div className="movie-card__wrap">

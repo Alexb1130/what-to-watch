@@ -5,28 +5,29 @@ import MoviePageUi from './components/moviePage/MoviePageUi';
 import SignIn from "./components/signIn/SignIn";
 import { observer } from "mobx-react";
 import AddReview from "./components/addReview/addReview";
-import rootStore from './store';
 import Favorites from './components/favorities/FavoritesUi';
+import { withStore, useStore } from './store';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
 
-    const store = rootStore.authorizationStore;
+    const { authorization } = useStore()
 
     return (
         <Route
             {...rest}
             render={props => (
-                store.isAuthorizationRequired ? <Redirect to="/login" /> : <Component {...props} />
+                authorization.isAuthorizationRequired ? <Redirect to="/login" /> : <Component {...props} />
             )}
         />
     )
 }
 
 @observer
+@withStore
 class App extends Component {
 
-    authorizationStore = rootStore.authorizationStore;
-    filmsStore = rootStore.filmsStore;
+    authorizationStore = this.props.store.authorization;
+    filmsStore = this.props.store.films;
 
     componentDidMount() {
         this.filmsStore.getFilms();

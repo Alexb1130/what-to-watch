@@ -1,55 +1,49 @@
 import React from 'react';
 import {observer} from "mobx-react";
 import {DEFAULT_GENRE} from '../../common/constants';
-import rootStore from '../../store';
+import {withStore} from '../../store';
 
+@withStore
 @observer
 class GenresListUi extends React.Component {
 
-    filmsStore = rootStore.filmsStore;
+    filmsStore = this.props.store.films;
 
     state = {
         selectedGenre: DEFAULT_GENRE,
         genres: [
             {
-                name: 'All genres',
-                route: '#'
+                name: 'All genres'
             },
             {
                 name: 'Comedies',
-                route: '#'
             },
             {
                 name: 'Crime',
-                route: '#'
             },
             {
                 name: 'Documentary',
-                route: '#'
+            },
+            {
+                name: 'Adventure',
             },
             {
                 name: 'Drama',
-                route: '#'
             },
             {
                 name: 'Horror',
-                route: '#'
             },
             {
                 name: 'Kids & Family',
-                route: '#'
             },
             {
                 name: 'Romance',
-                route: '#'
             },
             {
                 name: 'Sci-Fi',
-                route: '#'
             },
             {
                 name: 'Thriller',
-                route: '#'
             }
         ]
     };

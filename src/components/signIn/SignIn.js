@@ -2,14 +2,15 @@ import React, {Component} from 'react';
 import Logo from "../logo/Logo";
 import FooterUi from "../footer/FooterUi";
 import {withRouter} from 'react-router-dom';
-import rootStore from '../../store';
+import {withStore} from '../../store';
 
+@withStore
 @withRouter
 class SignIn extends Component {
 
     history = this.props.history;
 
-    authorizationStore = rootStore.authorizationStore;
+    authorizationStore = this.props.store.authorization;
 
     submitHandler(event) {
         event.preventDefault();

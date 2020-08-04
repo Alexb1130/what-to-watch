@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link, withRouter} from 'react-router-dom';
-import rootStore from '../../store';
+import {useStore} from '../../store';
 
 const logoLetters = ['W', 'T', 'W'];
 
@@ -11,10 +11,10 @@ const logoLettersRender = logoLetters.map((letter, i) => (
 
 const Logo = withRouter((props) => {
     const {pathname} = props.location;
-    const {authorizationStore} = rootStore;
+    const {authorization} = useStore();
 
     return <div className="logo">
-        {pathname === '/' || authorizationStore.isAuthorizationRequired ?
+        {pathname === '/' || authorization.isAuthorizationRequired ?
             <a className={`logo__link ${props.modifier || ''}`}>
                 {logoLettersRender}
             </a> :

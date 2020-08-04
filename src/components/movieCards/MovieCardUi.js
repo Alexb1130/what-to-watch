@@ -1,18 +1,18 @@
 import React from 'react';
 import Logo from '../logo/Logo';
 import UserBlock from '../../components/userBlock/UserBlockUi';
-import rootStore from '../../store';
+import {withStore} from '../../store';
 import {observer} from 'mobx-react';
 
+@withStore
 @observer
 class CardUi extends React.Component {
 
-    authorizationStore = rootStore.authorizationStore;
-    filmStore = rootStore.filmsStore;
-    userStore = rootStore.userStore;
+    authorizationStore = this.props.store.authorization;
+    filmStore = this.props.store.films;
+    userStore = this.props.store.user;
 
     componentDidMount() {
-        this.userStore.getUser();
         this.filmStore.getPromoFilm()
     }
 
@@ -51,7 +51,7 @@ class CardUi extends React.Component {
 
                     <Logo />
 
-                    <UserBlock user={this.userStore.user} />
+                    <UserBlock />
                 </header>
 
                 <div className="movie-card__wrap">

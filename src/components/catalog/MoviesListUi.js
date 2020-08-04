@@ -1,12 +1,13 @@
 import React from 'react';
 import MovieCardSmallUi from '../movieCards/MovieCardSmallUi';
 import {observer} from "mobx-react";
-import rootStore from '../../store';
+import {withStore} from '../../store';
 
+@withStore
 @observer
 class MoviesListUi extends React.Component {
 
-    filmsStore = rootStore.filmsStore;
+    filmsStore = this.props.store.films;
 
     state = {
         activeMovie: null,

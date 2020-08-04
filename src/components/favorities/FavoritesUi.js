@@ -3,13 +3,14 @@ import Logo from '../logo/Logo';
 import FooterUi from '../footer/FooterUi';
 import UserBlock from '../userBlock/UserBlockUi';
 import MovieCardSmallUi from '../movieCards/MovieCardSmallUi';
-import rootStore from '../../store';
+import {withStore} from '../../store';
 import {observer} from 'mobx-react';
 
+@withStore
 @observer
 class Favorites extends React.Component {
 
-    userStore = rootStore.userStore;
+    userStore = this.props.store.user;
 
     componentDidMount() {
         this.userStore.getFavorite()
@@ -25,7 +26,7 @@ class Favorites extends React.Component {
 
                     <h1 className="page-title user-page__title">My list</h1>
 
-                    <UserBlock user={this.userStore.user} />
+                    <UserBlock />
                 </header>
 
                 <section className="catalog">

@@ -1,16 +1,16 @@
-import React, {Component} from 'react';
-import { observer } from "mobx-react";
-import {withRouter} from 'react-router-dom';
-import rootStore from '../../store';
+import React, { Component } from 'react';
+import {observer} from "mobx-react";
+import {withRouter, Link} from 'react-router-dom';
+import {withStore} from '../../store';
 
 import UserBlock from '../userBlock/UserBlockUi';
 
+@withStore
 @withRouter
 @observer
 class AddReview extends Component {
 
-    filmsStore = rootStore.filmsStore;
-    userStore = rootStore.userStore;
+    filmsStore = this.props.store.films;
 
     onSubmitReview = (e) => {
         e.preventDefault();
@@ -24,6 +24,11 @@ class AddReview extends Component {
 
         this.filmsStore.submitReview(filmId, reviewData)
 
+    }
+
+    goBack = (event) => {
+        event.preventDefault();
+        this.props.history.goBack();
     }
 
     render() {
@@ -56,7 +61,7 @@ class AddReview extends Component {
                         <nav className="breadcrumbs">
                             <ul className="breadcrumbs__list">
                                 <li className="breadcrumbs__item">
-                                    <a href="movie-page.html" className="breadcrumbs__link">{currentFilm.name}</a>
+                                    <a href="movie-page.html" onClick={this.goBack} className="breadcrumbs__link">{currentFilm.name}</a>
                                 </li>
                                 <li className="breadcrumbs__item">
                                     <a className="breadcrumbs__link">Add review</a>
@@ -64,7 +69,7 @@ class AddReview extends Component {
                             </ul>
                         </nav>
 
-                        <UserBlock user={this.userStore.user} />
+                        <UserBlock />
 
                     </header>
 
