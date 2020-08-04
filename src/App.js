@@ -8,15 +8,27 @@ import AddReview from "./components/addReview/addReview";
 import rootStore from './store';
 import Favorites from './components/favorities/FavoritesUi';
 
+const PrivateRoute = ({ component: Component, ...rest }) => {
+
+    const store = rootStore.authorizationStore;
+
+    return (
+        <Route
+            {...rest}
+            render={props => (
+                store.isAuthorizationRequired ? <Redirect to="/login" /> : <Component {...props} />
+            )}
+        />
+    )
+}
+
 @observer
 class App extends Component {
 
     authorizationStore = rootStore.authorizationStore;
     filmsStore = rootStore.filmsStore;
-    userStore = rootStore.userStore;
 
     componentDidMount() {
-        this.userStore.getUser();
         this.filmsStore.getFilms();
         this.authorizationStore.checkAuthorization()
     }
@@ -28,11 +40,9 @@ class App extends Component {
                 <Switch>
                     <Route exact path="/" component={MainPageUi} />
                     <Route exact path="/login" component={SignIn} />
-                    <Route exact path="/favorite" component={Favorites} />
                     <Route exact path="/films/:id" component={MoviePageUi} />
-                    <Route exact path="/films/:id/review" render={props => {
-                        return this.authorizationStore.isAuthorizationRequired ? <Redirect to="/login" /> : <AddReview {...props} />
-                    }} />
+                    <PrivateRoute exact path="/favorite" component={Favorites} />
+                    <PrivateRoute exact path="/films/:id/review" component={AddReview} />
                 </Switch>
             </Router>
         )

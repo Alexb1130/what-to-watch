@@ -12,6 +12,7 @@ class CardUi extends React.Component {
     userStore = rootStore.userStore;
 
     componentDidMount() {
+        this.userStore.getUser();
         this.filmStore.getPromoFilm()
     }
 

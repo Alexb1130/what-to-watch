@@ -12,7 +12,7 @@ export default class {
     @observable favorites = [];
 
     @action getUser() {
-         this.rootStore.authorizationStore.checkAuthorization().then(data => {
+         return this.rootStore.authorizationStore.checkAuthorization().then(data => {
             this.user = data;
         })
     }
