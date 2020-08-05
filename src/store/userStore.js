@@ -18,16 +18,20 @@ export default class {
     }
 
     @action addFavorite(id, status = '1') {
-        this.api.post(`/favorite/${id}/${status}`)
+        return this.api.post(`/favorite/${id}/${status}`)
     }
 
     @action removeFavorite(id, status = '0') {
-        this.api.post(`/favorite/${id}/${status}`)
+        return this.api.post(`/favorite/${id}/${status}`)
     }
 
     @action getFavorite() {
-        this.api.get(`/favorite/`).then(res => {
+        return this.api.get(`/favorite/`).then(res => {
             this.favorites = res.data;
         })
+    }
+
+    @action checkFavorite(id) {
+        return this.api.get(`/favorite/`).then(({ data }) => data.findIndex(movie => movie.id === id))
     }
 }

@@ -16,6 +16,16 @@ class MoviePageUi extends React.Component {
     filmsStore = this.props.store.films;
     userStore = this.props.store.user;
 
+    favoriteHandler(id) {
+        this.userStore.checkFavorite(id).then(index => {
+            if (index !== -1) {
+                this.userStore.removeFavorite(id)
+            } else {
+                this.userStore.addFavorite(id)
+            }
+        })
+    }
+
     render() {
 
         const {films, getCurrentFilm} = this.filmsStore;
@@ -62,9 +72,9 @@ class MoviePageUi extends React.Component {
                                         </svg>
                                         <span>Play</span>
                                     </button>
-                                    <button onClick={() => this.userStore.addFavorite(currentFilm.id)} className="btn btn--list movie-card__button" type="button">
+                                    <button onClick={() => this.favoriteHandler(currentFilm.id)} className="btn btn--list movie-card__button" type="button">
                                         <svg viewBox="0 0 19 20" width="19" height="20">
-                                            <use xlinkHref="#add"></use>
+                                            <use xlinkHref={currentFilm.is_favorite ? "#in-list" : "#add"} />
                                         </svg>
                                         <span>My list</span>
                                     </button>

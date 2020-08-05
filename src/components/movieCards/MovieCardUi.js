@@ -16,6 +16,20 @@ class CardUi extends React.Component {
         this.filmStore.getPromoFilm()
     }
 
+    componentDidUpdate() {
+        this.filmStore.getPromoFilm()
+    }
+
+    favoriteHandler(id) {
+        this.userStore.checkFavorite(id).then(index => {
+            if (index !== -1) {
+                this.userStore.removeFavorite(id)
+            } else {
+                this.userStore.addFavorite(id)
+            }
+        })
+    }
+
     render() {
 
         const { currentPromoFilm } = this.filmStore;
@@ -75,9 +89,9 @@ class CardUi extends React.Component {
                                     </svg>
                                     <span>Play</span>
                                 </button>
-                                <button onClick={() => this.userStore.addFavorite(id)} className="btn btn--play movie-card__button">
+                                <button onClick={() => this.favoriteHandler(id)} className="btn btn--play movie-card__button">
                                     <svg viewBox="0 0 19 19" width="19" height="19">
-                                        <use xlinkHref="#add" />
+                                        <use xlinkHref={is_favorite ? "#in-list" : "#add"} />
                                     </svg>
                                     <span>My list</span>
                                 </button>
