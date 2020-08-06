@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, remove } from 'mobx';
 
 export default class {
 
@@ -18,11 +18,11 @@ export default class {
     }
 
     @action addFavorite(id, status = '1') {
-        return this.api.post(`/favorite/${id}/${status}`)
+        return this._actionFavorite(id, status)
     }
 
     @action removeFavorite(id, status = '0') {
-        return this.api.post(`/favorite/${id}/${status}`)
+        return this._actionFavorite(id, status)
     }
 
     @action getFavorite() {
@@ -33,5 +33,11 @@ export default class {
 
     @action checkFavorite(id) {
         return this.api.get(`/favorite/`).then(({ data }) => data.findIndex(movie => movie.id === id))
+    }
+
+    _actionFavorite(id, status) {
+        return this.api.post(`/favorite/${id}/${status}`).then(({ data }) => {
+            this.rootStore.films.getFilms();
+        })
     }
 }
