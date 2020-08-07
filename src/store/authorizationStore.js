@@ -20,8 +20,5 @@ export default class {
                 this.isAuthorizationRequired = false;
                 return data;
             })
-            .catch(e => {
-                throw e
-            })
     }
 }

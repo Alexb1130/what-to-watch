@@ -19,9 +19,13 @@ class MoviePageUi extends React.Component {
     favoriteHandler(id) {
         this.userStore.checkFavorite(id).then(index => {
             if (index !== -1) {
-                this.userStore.removeFavorite(id)
+                this.userStore.removeFavorite(id).then(({ data }) => {
+                    this.filmsStore.getFilms();
+                })
             } else {
-                this.userStore.addFavorite(id)
+                this.userStore.addFavorite(id).then(({ data }) => {
+                    this.filmsStore.getFilms();
+                })
             }
         })
     }

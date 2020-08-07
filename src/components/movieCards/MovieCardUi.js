@@ -16,16 +16,16 @@ class CardUi extends React.Component {
         this.filmStore.getPromoFilm()
     }
 
-    componentDidUpdate() {
-        this.filmStore.getPromoFilm()
-    }
-
     favoriteHandler(id) {
         this.userStore.checkFavorite(id).then(index => {
             if (index !== -1) {
-                this.userStore.removeFavorite(id)
+                this.userStore.removeFavorite(id).then(({ data }) => {
+                    this.filmStore.getPromoFilm()
+                })
             } else {
-                this.userStore.addFavorite(id)
+                this.userStore.addFavorite(id).then(({ data }) => {
+                    this.filmStore.getPromoFilm()
+                })
             }
         })
     }

@@ -1,4 +1,4 @@
-import { observable, action, remove } from 'mobx';
+import { observable, action } from 'mobx';
 
 export default class {
 
@@ -36,8 +36,6 @@ export default class {
     }
 
     _actionFavorite(id, status) {
-        return this.api.post(`/favorite/${id}/${status}`).then(({ data }) => {
-            this.rootStore.films.getFilms();
-        })
+        return this.api.post(`/favorite/${id}/${status}`)
     }
 }

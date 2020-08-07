@@ -7,6 +7,7 @@ import { observer } from "mobx-react";
 import AddReview from "./components/addReview/addReview";
 import Favorites from './components/favorities/FavoritesUi';
 import { withStore, useStore } from './store';
+import NotificationsUi from './components/notifications/NotificationsUi';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
 
@@ -31,13 +32,13 @@ class App extends Component {
 
     componentDidMount() {
         this.filmsStore.getFilms();
-        this.authorizationStore.checkAuthorization()
     }
 
     render() {
 
         return(
             <Router>
+                <NotificationsUi />
                 <Switch>
                     <Route exact path="/" component={MainPageUi} />
                     <Route exact path="/login" component={SignIn} />

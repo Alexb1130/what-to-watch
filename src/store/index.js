@@ -3,6 +3,7 @@ import React from "react";
 import FilmsStore from './filmsStore';
 import AuthorizationStore from './authorizationStore';
 import UserStore from './userStore';
+import NotificationsStore from './notificationsStore';
 import { createAPI } from '../api';
 class RootStore {
 
@@ -11,6 +12,7 @@ class RootStore {
         this.authorization = new AuthorizationStore(this);
         this.films = new FilmsStore(this);
         this.user = new UserStore(this);
+        this.notifications = new NotificationsStore(this);
     }
 
 }
@@ -23,10 +25,8 @@ export const StoreProvider = ({ children, store }) => {
     return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
 };
 
-/* Hook to use store in any functional component */
 export const useStore = () => React.useContext(StoreContext);
 
-/* HOC to inject store to any functional or class component */
 export const withStore = (Component) => (props) => {
     return <Component {...props} store={useStore()} />
 };
