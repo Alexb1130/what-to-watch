@@ -8,6 +8,19 @@ import {withRouter} from 'react-router-dom';
 import {Link} from "react-router-dom";
 import {withStore} from '../../store';
 
+const loadingStyles = {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    width: '100%',
+    minHeight: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    background: 'rgba(0,0,0,.9)',
+    color: '#c9b37e'
+}
+
 @withStore
 @withRouter
 @observer
@@ -39,7 +52,9 @@ class MoviePageUi extends React.Component {
         const similarFilms = films.filter(film => film.genre === currentFilm.genre);
 
         if(!currentFilm) {
-            return <h1>Loading...</h1>
+            return <div style={loadingStyles}>
+                <h1>Loading...</h1>
+            </div>
         }
 
         return (

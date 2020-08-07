@@ -22,7 +22,9 @@ class AddReview extends Component {
             comment: form.elements['review-text'].value
         }
 
-        this.filmsStore.submitReview(filmId, reviewData)
+        this.filmsStore.submitReview(filmId, reviewData).then(() => {
+            this.props.history.goBack();
+        })
 
     }
 

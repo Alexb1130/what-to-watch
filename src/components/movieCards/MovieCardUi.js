@@ -8,7 +8,6 @@ import {observer} from 'mobx-react';
 @observer
 class CardUi extends React.Component {
 
-    authorizationStore = this.props.store.authorization;
     filmStore = this.props.store.films;
     userStore = this.props.store.user;
 

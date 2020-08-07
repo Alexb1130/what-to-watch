@@ -34,7 +34,7 @@ export default class {
     }
 
     @action submitReview(id, reviewData) {
-        this.api.post(`/comments/${id}`, reviewData);
+        return this.api.post(`/comments/${id}`, reviewData);
     }
 
     updateFilms() {

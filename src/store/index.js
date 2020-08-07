@@ -5,10 +5,11 @@ import AuthorizationStore from './authorizationStore';
 import UserStore from './userStore';
 import NotificationsStore from './notificationsStore';
 import { createAPI } from '../api';
+
 class RootStore {
 
     constructor() {
-        this.api = createAPI();
+        this.api = createAPI(errorMessage => this.notifications.add(errorMessage));
         this.authorization = new AuthorizationStore(this);
         this.films = new FilmsStore(this);
         this.user = new UserStore(this);

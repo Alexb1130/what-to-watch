@@ -29,7 +29,9 @@ class SignIn extends Component {
     }
 
     componentDidMount() {
-        this.authorizationStore.checkAuthorization();
+        this.authorizationStore.checkAuthorization().then(() => {
+            this.history.push('/favorite')
+        })
     }
 
     render() {
