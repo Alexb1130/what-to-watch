@@ -3,6 +3,7 @@ import Logo from '../logo/Logo';
 import UserBlock from '../../components/userBlock/UserBlockUi';
 import {withStore} from '../../store';
 import {observer} from 'mobx-react';
+import VideoPlayerUi from "../videoPlayer/VideoPlayerUi";
 
 @withStore
 @observer
@@ -11,8 +12,20 @@ class CardUi extends React.Component {
     filmStore = this.props.store.films;
     userStore = this.props.store.user;
 
+    state = {
+        isStartVideoPlaying: false
+    }
+
     componentDidMount() {
         this.filmStore.getPromoFilm()
+    }
+
+    _playHandle = () => {
+        this.setState({isStartVideoPlaying: true})
+    }
+
+    _exitPlayer = () => {
+        this.setState({isStartVideoPlaying: false})
     }
 
     favoriteHandler(id) {
@@ -31,18 +44,19 @@ class CardUi extends React.Component {
 
     render() {
 
-        const { currentPromoFilm } = this.filmStore;
+        const {isStartVideoPlaying} = this.state;
+        const {currentPromoFilm} = this.filmStore;
         const {
             id,
             is_favorite,
             poster_image,
             preview_image,
             preview_video_link,
-            background_color, 
-            background_image, 
-            name, 
-            description, 
-            director, 
+            background_color,
+            background_image,
+            name,
+            description,
+            director,
             genre,
             rating,
             released,
@@ -53,6 +67,15 @@ class CardUi extends React.Component {
         } = currentPromoFilm;
 
         return (
+            <>
+            {
+                isStartVideoPlaying &&
+                <VideoPlayerUi
+                    exitPlayer={this._exitPlayer}
+                    isStartPlaying={isStartVideoPlaying}
+                    film={currentPromoFilm}
+                />
+            }
             <section className="movie-card">
                 <div className="movie-card__bg" style={{backgroundColor: background_color}}>
                     <img src={background_image} alt={name} />
@@ -82,7 +105,7 @@ class CardUi extends React.Component {
                             </p>
 
                             <div className="movie-card__buttons">
-                                <button className="btn btn--play movie-card__button">
+                                <button onClick={this._playHandle} className="btn btn--play movie-card__button">
                                     <svg viewBox="0 0 19 19" width="19" height="19">
                                         <use xlinkHref="#play-s" />
                                     </svg>
@@ -100,6 +123,7 @@ class CardUi extends React.Component {
                 </div>
 
             </section>
+            </>
         )
     }
 }

@@ -7,6 +7,7 @@ import {observer} from "mobx-react";
 import {withRouter} from 'react-router-dom';
 import {Link} from "react-router-dom";
 import {withStore} from '../../store';
+import VideoPlayerUi from "../videoPlayer/VideoPlayerUi";
 
 const loadingStyles = {
     position: 'absolute',
@@ -29,6 +30,18 @@ class MoviePageUi extends React.Component {
     filmsStore = this.props.store.films;
     userStore = this.props.store.user;
 
+    state = {
+        isStartVideoPlaying: false
+    }
+
+    _playHandle = () => {
+        this.setState({isStartVideoPlaying: true})
+    }
+
+    _exitPlayer = () => {
+        this.setState({isStartVideoPlaying: false})
+    }
+
     favoriteHandler(id) {
         this.userStore.checkFavorite(id).then(index => {
             if (index !== -1) {
@@ -45,6 +58,7 @@ class MoviePageUi extends React.Component {
 
     render() {
 
+        const {isStartVideoPlaying} = this.state;
         const {films, getCurrentFilm} = this.filmsStore;
         const {match} = this.props;
         const currentFilm = getCurrentFilm(films, match.params.id);
@@ -59,6 +73,14 @@ class MoviePageUi extends React.Component {
 
         return (
             <>
+                {
+                    isStartVideoPlaying &&
+                    <VideoPlayerUi
+                        exitPlayer={this._exitPlayer}
+                        isStartPlaying={isStartVideoPlaying}
+                        film={currentFilm}
+                    />
+                }
                 <section className="movie-card movie-card--full" style={{backgroundColor: currentFilm.background_color}}>
                     <div className="movie-card__hero">
                         <div className="movie-card__bg">
@@ -85,7 +107,7 @@ class MoviePageUi extends React.Component {
                                 </p>
 
                                 <div className="movie-card__buttons">
-                                    <button className="btn btn--play movie-card__button" type="button">
+                                    <button onClick={this._playHandle} className="btn btn--play movie-card__button" type="button">
                                         <svg viewBox="0 0 19 19" width="19" height="19">
                                             <use xlinkHref="#play-s"></use>
                                         </svg>

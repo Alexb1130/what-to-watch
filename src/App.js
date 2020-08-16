@@ -27,7 +27,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 @withStore
 class App extends Component {
 
-    authorizationStore = this.props.store.authorization;
     filmsStore = this.props.store.films;
 
     componentDidMount() {

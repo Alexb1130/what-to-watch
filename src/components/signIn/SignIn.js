@@ -12,7 +12,7 @@ class SignIn extends Component {
 
     authorizationStore = this.props.store.authorization;
 
-    submitHandler(event) {
+    submitHandler = (event) => {
         event.preventDefault();
         const form = event.target;
 
@@ -45,7 +45,7 @@ class SignIn extends Component {
                 </header>
 
                 <div className="sign-in user-page__content">
-                    <form onSubmit={(event => this.submitHandler(event))} action="#" className="sign-in__form">
+                    <form onSubmit={this.submitHandler} action="#" className="sign-in__form">
                         <div className="sign-in__fields">
                             <div className="sign-in__field">
                                 <input className="sign-in__input" type="email" placeholder="Email address"
