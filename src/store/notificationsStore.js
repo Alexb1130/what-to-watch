@@ -1,7 +1,7 @@
 import { action, observable, computed } from 'mobx';
 
 class NotificationsStore {
-    
+
     constructor(rootStore) {
         this.rootStore = rootStore;
     }
@@ -10,7 +10,7 @@ class NotificationsStore {
 
     _defaultNotificationID = 0;
 
-    @computed get notificationsList() {
+    @computed get list() {
         return [...this.notifications.values()];
     }
 
