@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {Switch, Route, Redirect, BrowserRouter as Router} from "react-router-dom";
-import MainPageUi from './components/mainPage/MainPageUi';
-import MoviePageUi from './components/moviePage/MoviePageUi';
-import SignIn from "./components/signIn/SignIn";
+import MainPageUi from '@/pages/main/MainPageUi';
+import MoviePageUi from '@/pages/movie/MoviePageUi';
+import SignIn from "@/components/signIn/SignIn";
 import { observer } from "mobx-react";
-import AddReview from "./components/addReview/addReview";
-import Favorites from './components/favorities/FavoritesUi';
-import { withStore, useStore } from './store';
-import NotificationsUi from './components/notifications/NotificationsUi';
+import AddReview from "@/components/addReview/addReview";
+import Favorites from '@/components/favorities/FavoritesUi';
+import { withStore, useStore } from '@/store';
+import NotificationsUi from '@/components/notifications/NotificationsUi';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
 
