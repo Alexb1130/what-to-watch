@@ -4,8 +4,8 @@ const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    mode: `development`,
-    entry: './src/index.js',
+    mode: 'development',
+    entry: './src/index.tsx',
     output: {
         filename: 'bundle.js',
         path: publicPath,
@@ -22,6 +22,13 @@ module.exports = {
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader'
+                }
+            },
+            {
+                test: /\.(tsx|ts)?$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'ts-loader'
                 }
             },
             {
@@ -50,7 +57,8 @@ module.exports = {
     resolve: {
         alias: {
             '@': path.resolve(__dirname, 'src')
-        }
+        },
+        extensions: [`.ts`, `.tsx`, `.js`, `json`]
     },
     devtool: 'source-maps',
     plugins: [

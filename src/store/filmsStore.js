@@ -1,5 +1,5 @@
 import { observable, computed, action } from 'mobx';
-import {DEFAULT_GENRE} from '../common/constants';
+import {DEFAULT_GENRE} from '@/common/constants';
 
 export default class {
 

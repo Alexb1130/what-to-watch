@@ -4,7 +4,7 @@ import FilmsStore from './filmsStore';
 import AuthorizationStore from './authorizationStore';
 import UserStore from './userStore';
 import NotificationsStore from './notificationsStore';
-import { createAPI } from '../api';
+import { createAPI } from '@/api';
 
 class RootStore {
 
