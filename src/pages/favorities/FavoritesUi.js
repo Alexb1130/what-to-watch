@@ -1,9 +1,9 @@
 import React from 'react';
-import Logo from '../logo/Logo';
-import FooterUi from '../footer/FooterUi';
-import UserBlock from '../userBlock/UserBlockUi';
-import MovieCardSmallUi from '../movieCards/MovieCardSmallUi';
-import {withStore} from '../../store';
+import Logo from '@/components/logo/Logo';
+import FooterUi from '@/components/footer/FooterUi';
+import UserBlock from '@/components/userBlock/UserBlockUi';
+import MovieCardSmallUi from '@/components/movieCards/MovieCardSmallUi';
+import {withStore} from '@/store';
 import {observer} from 'mobx-react';
 
 @withStore

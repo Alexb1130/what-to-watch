@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import Logo from "../logo/Logo";
-import FooterUi from "../footer/FooterUi";
+import Logo from "@/components/logo/Logo";
+import FooterUi from "@/components/footer/FooterUi";
 import {withRouter} from 'react-router-dom';
-import {withStore} from '../../store';
+import {withStore} from '@/store';
 
 @withStore
 @withRouter
@@ -24,13 +24,13 @@ class SignIn extends Component {
         this.authorizationStore.authorization(formData)
             .then(() => {
                 form.reset();
-                this.history.push('/')
+                this.history.goBack()
             })
     }
 
     componentDidMount() {
         this.authorizationStore.checkAuthorization().then(() => {
-            this.history.push('/favorite')
+            this.history.goBack()
         })
     }
 

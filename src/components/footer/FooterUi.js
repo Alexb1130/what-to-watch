@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../logo/Logo';
+import Logo from '@/components/logo/Logo';
 
 const FooterUi = () => (
     <footer className="page-footer">

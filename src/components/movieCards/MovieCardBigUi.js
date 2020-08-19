@@ -34,7 +34,7 @@ class MovieCardBigUi extends React.Component {
     render() {
 
         const {isStartVideoPlaying} = this.state;
-        const {film, isFull, favoriteHandler} = this.props;
+        const { film, isFull, isAuthorizationRequired, favoriteHandler} = this.props;
 
         if(!film) {
             return <div style={loadingStyles}>
@@ -94,7 +94,7 @@ class MovieCardBigUi extends React.Component {
                                             <span>My list</span>
                                         </button>
                                         {
-                                            isFull &&
+                                            isFull && !isAuthorizationRequired &&
                                             <Link to={`${film.id}/review/`} className="btn movie-card__button">
                                                 Add review
                                             </Link>

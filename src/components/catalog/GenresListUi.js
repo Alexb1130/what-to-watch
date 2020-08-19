@@ -1,7 +1,7 @@
 import React from 'react';
 import {observer} from "mobx-react";
-import {GENRES ,DEFAULT_GENRE} from '../../common/constants';
-import {withStore} from '../../store';
+import {GENRES ,DEFAULT_GENRE} from '@/common/constants';
+import {withStore} from '@/store';
 
 @withStore
 @observer

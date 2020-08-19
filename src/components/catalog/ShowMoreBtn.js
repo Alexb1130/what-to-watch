@@ -1,11 +1,11 @@
 import React, {Component} from "react";
 import {observer} from "mobx-react";
-import {withStore} from '../../store';
+import {withStore} from '@/store';
 
 @withStore
 @observer
 class ShowMoreBtn extends Component {
-    
+
     filmsStore = this.props.store.films;
 
     clickHandler() {

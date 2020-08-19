@@ -1,7 +1,7 @@
 import React from 'react';
-import MovieCardSmallUi from '../movieCards/MovieCardSmallUi';
+import MovieCardSmallUi from '@/components/movieCards/MovieCardSmallUi';
 import {observer} from "mobx-react";
-import {withStore} from '../../store';
+import {withStore} from '@/store';
 
 @withStore
 @observer

@@ -14,6 +14,7 @@ class MoviePageUi extends React.Component {
 
     filmsStore = this.props.store.films;
     userStore = this.props.store.user;
+    authorizationStore = this.props.store.authorization;
 
     favoriteHandler = id => {
         this.userStore.checkFavorite(id).then(index => {
@@ -30,10 +31,10 @@ class MoviePageUi extends React.Component {
     }
 
     render() {
-        const {films, getCurrentFilm} = this.filmsStore;
         const {match} = this.props;
+        const {isAuthorizationRequired} = this.authorizationStore;
+        const {films, getCurrentFilm} = this.filmsStore;
         const currentFilm = getCurrentFilm(films, match.params.id);
-
         const similarFilms = films.filter(film => film.genre === currentFilm.genre);
 
         return (
@@ -41,6 +42,7 @@ class MoviePageUi extends React.Component {
                 <MovieCardBigUi
                     isFull
                     film={currentFilm}
+                    isAuthorizationRequired={isAuthorizationRequired}
                     favoriteHandler={this.favoriteHandler}
                 />
                 {currentFilm &&

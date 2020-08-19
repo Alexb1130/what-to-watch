@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {observer} from "mobx-react";
-import {withRouter, Link} from 'react-router-dom';
-import {withStore} from '../../store';
+import {withRouter} from 'react-router-dom';
+import {withStore} from '@/store';
 
-import UserBlock from '../userBlock/UserBlockUi';
+import UserBlock from '@/components/userBlock/UserBlockUi';
 
 @withStore
 @withRouter
