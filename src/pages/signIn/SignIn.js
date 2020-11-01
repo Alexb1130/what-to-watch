@@ -10,7 +10,7 @@ class SignIn extends Component {
 
     history = this.props.history;
 
-    authorizationStore = this.props.store.authorization;
+    authorizationStore = this.props.store.authorizationStore;
 
     submitHandler = (event) => {
         event.preventDefault();

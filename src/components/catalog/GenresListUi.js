@@ -7,7 +7,7 @@ import {withStore} from '@/store';
 @observer
 class GenresListUi extends React.Component {
 
-    filmsStore = this.props.store.films;
+    filmsStore = this.props.store.filmsStore;
 
     state = {
         selectedGenre: DEFAULT_GENRE,

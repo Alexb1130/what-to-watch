@@ -7,7 +7,7 @@ import {withStore} from '@/store';
 @observer
 class MoviesListUi extends React.Component {
 
-    filmsStore = this.props.store.films;
+    filmsStore = this.props.store.filmsStore;
 
     state = {
         activeMovie: null,

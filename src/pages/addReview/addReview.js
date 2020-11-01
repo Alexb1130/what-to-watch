@@ -10,7 +10,7 @@ import UserBlock from '@/components/userBlock/UserBlockUi';
 @observer
 class AddReview extends Component {
 
-    filmsStore = this.props.store.films;
+    filmsStore = this.props.store.filmsStore;
 
     onSubmitReview = (e) => {
         e.preventDefault();

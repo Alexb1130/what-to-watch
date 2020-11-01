@@ -5,7 +5,7 @@ import {useStore} from '@/store';
 
 const UserBlock = () => {
 
-    const userStore = useStore().user;
+    const {userStore} = useStore();
     const {user} = userStore;
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const UserBlock = () => {
             {
                 user ?
                     <Link style={{ display: 'block' }} to="/favorite" className="user-block__avatar">
-                        <img src={`https://htmlacademy-react-3.appspot.com${user.avatar_url}`} alt={user.name} width="63" height="63" />
+                        <img src={`${user.avatar_url}`} alt={user.name} width="63" height="63" />
                     </Link> :
                     <Link to="/login" className="user-block__link">Sign in</Link>
             }

@@ -6,7 +6,7 @@ import {withStore} from '@/store';
 @observer
 class ShowMoreBtn extends Component {
 
-    filmsStore = this.props.store.films;
+    filmsStore = this.props.store.filmsStore;
 
     clickHandler() {
         this.filmsStore.updateFilms()

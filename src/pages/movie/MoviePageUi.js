@@ -12,9 +12,9 @@ import {withRouter} from "react-router-dom";
 @observer
 class MoviePageUi extends React.Component {
 
-    filmsStore = this.props.store.films;
-    userStore = this.props.store.user;
-    authorizationStore = this.props.store.authorization;
+    filmsStore = this.props.store.filmsStore;
+    userStore = this.props.store.userStore;
+    authorizationStore = this.props.store.authorizationStore;
 
     favoriteHandler = id => {
         this.userStore.checkFavorite(id).then(index => {

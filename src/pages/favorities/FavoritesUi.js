@@ -10,7 +10,7 @@ import {observer} from 'mobx-react';
 @observer
 class Favorites extends React.Component {
 
-    userStore = this.props.store.user;
+    userStore = this.props.store.userStore;
 
     componentDidMount() {
         this.userStore.getFavorite()

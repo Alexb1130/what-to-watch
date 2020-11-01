@@ -10,8 +10,8 @@ import {observer} from 'mobx-react';
 @observer
 class MainPageUi extends React.Component {
 
-    filmsStore = this.props.store.films;
-    userStore = this.props.store.user;
+    filmsStore = this.props.store.filmsStore;
+    userStore = this.props.store.userStore;
 
     favoriteHandler = id => {
         this.userStore.checkFavorite(id).then(index => {
