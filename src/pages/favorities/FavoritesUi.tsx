@@ -1,13 +1,8 @@
 import React, {useEffect} from 'react';
-// @ts-ignore
 import Logo from '@/components/logo/Logo';
-// @ts-ignore
 import FooterUi from '@/components/footer/FooterUi';
-// @ts-ignore
 import UserBlock from '@/components/userBlock/UserBlockUi';
-// @ts-ignore
 import MovieCardSmallUi from '@/components/movieCards/MovieCardSmallUi';
-// @ts-ignore
 import {useStore} from '@/store';
 import {observer} from 'mobx-react';
 

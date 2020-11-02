@@ -4,7 +4,6 @@ import FilmsStore from './filmsStore';
 import AuthorizationStore from './authorizationStore';
 import UserStore from './userStore';
 import NotificationsStore from './notificationsStore';
-// @ts-ignore
 import { createAPI } from '@/api';
 import {AxiosInstance} from "axios";
 

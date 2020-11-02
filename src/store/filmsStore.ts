@@ -1,10 +1,7 @@
 import { observable, computed, action } from 'mobx';
-// @ts-ignore
 import RootStore from '@/store';
 import {AxiosInstance} from "axios";
-// @ts-ignore
 import {DEFAULT_GENRE} from '@/common/constants';
-// @ts-ignore
 import {Movie} from '@/types';
 
 export default class {
