@@ -1,13 +1,19 @@
 import React, {useEffect} from 'react';
 import {Switch, Route, Redirect, BrowserRouter as Router} from "react-router-dom";
 import { observer } from "mobx-react";
+// @ts-ignore
 import { useStore } from '@/store';
-
+// @ts-ignore
 import MainPageUi from '@/pages/main/MainPageUi';
+// @ts-ignore
 import MoviePageUi from '@/pages/movie/MoviePageUi';
+// @ts-ignore
 import SignIn from "@/pages/signIn/SignIn";
+// @ts-ignore
 import AddReview from "@/pages/addReview/addReview";
+// @ts-ignore
 import Favorites from '@/pages/favorities/FavoritesUi';
+// @ts-ignore
 import NotificationsUi from '@/components/notifications/NotificationsUi';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {

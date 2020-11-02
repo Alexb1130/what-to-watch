@@ -6,9 +6,10 @@ import UserStore from './userStore';
 import NotificationsStore from './notificationsStore';
 // @ts-ignore
 import { createAPI } from '@/api';
+import {AxiosInstance} from "axios";
 
 class RootStore {
-    api = createAPI(errorMessage => this.notificationsStore.add(errorMessage));
+    api: AxiosInstance = createAPI(errorMessage => this.notificationsStore.add(errorMessage));
     authorizationStore = new AuthorizationStore(this);
     filmsStore = new FilmsStore(this);
     userStore = new UserStore(this);

@@ -4,7 +4,7 @@ enum Error {
     UNAUTHORIZED = 401
 }
 
-export const createAPI = (onUnauthorized: (err: AxiosError) => void) => {
+export const createAPI = (onUnauthorized: (err: any) => void) => {
     const api: AxiosInstance = axios.create({
         baseURL: `https://5.react.pages.academy/wtw/`,
         timeout: 5000,
