@@ -1,36 +1,44 @@
 import { observable, computed, action } from 'mobx';
+// @ts-ignore
+import RootStore from '@/store';
+import {AxiosInstance} from "axios";
+// @ts-ignore
 import {DEFAULT_GENRE} from '@/common/constants';
+// @ts-ignore
+import {Movie} from '@/types';
 
 export default class {
 
-    constructor(rootStore) {
+    private readonly rootStore: RootStore;
+    private api: AxiosInstance;
+
+    @observable films: Array<Movie> = [];
+    @observable promoFilm: Movie | null = null;
+    @observable filmsCopy: Array<Movie> = [];
+    @observable filmsAll: Array<Movie> = [];
+    @observable filteredFilms: Array<Movie> = [];
+    @observable isNoFilmsSelectedGenre: boolean = false;
+    @observable currentFilm: Movie = null;
+
+    constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
         this.api = this.rootStore.api;
     }
 
-    @observable films = [];
-    @observable promoFilm = null;
-    @observable filmsCopy = [];
-    @observable filmsAll = [];
-    @observable filteredFilms = [];
-    @observable isNoFilmsSelectedGenre = false;
-    @observable currentFilm = null;
-
-    @action getFilms() {
-        return this.api.get('films').then(({data}) => {
-            this.films = data;
-            this.filmsCopy = [...data.slice(0, 8)];
-            this.filmsAll = [...data];
-            this.filmsAll.splice(0, 8);
-        });
+    @action async getFilms() {
+        const films = (await this.api.get('films')).data;
+        this.films = films;
+        this.filmsCopy = [...films.slice(0, 8)];
+        this.filmsAll = [...films];
+        this.filmsAll.splice(0, 8);
     }
 
     @computed get currentPromoFilm() {
         return this.promoFilm || {}
     }
 
-    @action getPromoFilm() {
-        return this.api.get('films/promo').then(({ data }) => this.promoFilm = data)
+    @action async getPromoFilm() {
+        this.promoFilm = (await this.api.get('films/promo')).data;
     }
 
     @action submitReview(id, reviewData) {

@@ -1,20 +1,31 @@
 import { action, observable, computed } from 'mobx';
 
+// @ts-ignore
+import RootStore from '@/store';
+
+interface Notification {
+    id?: number,
+    message: string,
+    type: string
+}
+
 class NotificationsStore {
 
-    constructor(rootStore) {
+    private readonly rootStore: RootStore;
+
+    constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
     }
 
-    @observable notifications = new Map()
+    @observable notifications: Map<number, Notification> = new Map()
 
-    _defaultNotificationID = 0;
+    _defaultNotificationID: number = 0;
 
     @computed get list() {
         return [...this.notifications.values()];
     }
 
-    @action add(message, type = 'error', timeToAutoHide = 3000) {
+    @action add({message, type = 'error'}: Notification, timeToAutoHide: number = 3000) {
         this.notifications.set(++this._defaultNotificationID, {
             id: this._defaultNotificationID,
             message,
@@ -28,7 +39,7 @@ class NotificationsStore {
         }
     }
 
-    @action remove(id) {
+    @action remove(id: number) {
         if (this.notifications.has(id)) {
             this.notifications.delete(id)
         }

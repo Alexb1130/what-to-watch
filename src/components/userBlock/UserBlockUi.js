@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {Link} from 'react-router-dom';
-import { observer } from "mobx-react";
+import {observer} from "mobx-react";
 import {useStore} from '@/store';
 
 const UserBlock = () => {
@@ -8,8 +8,8 @@ const UserBlock = () => {
     const {userStore} = useStore();
     const {user} = userStore;
 
-    useEffect(() => {
-        userStore.getUser();
+    useEffect( () => {
+        userStore.getUser()
     }, [])
 
     return(
