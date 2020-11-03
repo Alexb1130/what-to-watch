@@ -1,10 +1,7 @@
 import { observable, action } from 'mobx';
-// @ts-ignore
 import RootStore from '@/store';
 import {AxiosInstance} from "axios";
-
-// @ts-ignore
-import {User, Movie} from '@/types';
+import {User, Movie, FavoriteStatus} from '@/types';
 
 export default class {
     private readonly rootStore: RootStore;
@@ -23,12 +20,15 @@ export default class {
         this.user = await this.rootStore.authorizationStore.checkAuthorization()
     }
 
-    @action addFavorite(id, status = '1') {
-        return this._actionFavorite(id, status)
-    }
+    @action async updateFavorite(id) {
+        const index = await this.checkFavorite(id);
 
-    @action removeFavorite(id, status = '0') {
-        return this._actionFavorite(id, status)
+        if (index !== -1) {
+            await this.api.post(`/favorite/${id}/${FavoriteStatus.remove}`);
+            return;
+        }
+
+        await this.api.post(`/favorite/${id}/${FavoriteStatus.add}`)
     }
 
     @action async getFavorite() {
@@ -40,9 +40,5 @@ export default class {
     @action async checkFavorite(id) {
         const favorites = await this.getFavorite();
         return favorites.findIndex(movie => movie.id === id);
-    }
-
-    _actionFavorite(id, status) {
-        return this.api.post(`/favorite/${id}/${status}`)
     }
 }

@@ -1,31 +1,30 @@
 import React  from 'react';
 import {observer} from "mobx-react";
 import {withRouter} from 'react-router-dom';
+import {RouteComponentProps} from "react-router";
 import {useStore} from '@/store';
-
 import UserBlock from '@/components/userBlock/UserBlockUi';
 
-const AddReview = withRouter(observer((props) => {
+const AddReview = withRouter(observer((props: RouteComponentProps) => {
 
     const {filmsStore} = useStore();
 
-    const onSubmitReview = (e) => {
-        e.preventDefault();
+    const onSubmitReview = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
-        const form = e.target;
+        const form = event.target as HTMLFormElement;
         const filmId = props.match.params.id;
         const reviewData = {
-            rating: parseInt(form.elements.rating.value, 10),
+            rating: parseInt(form.elements['rating'].value, 10),
             comment: form.elements['review-text'].value
         }
 
-        filmsStore.submitReview(filmId, reviewData).then(() => {
-            props.history.goBack();
-        })
+        await filmsStore.submitReview(filmId, reviewData);
+        await props.history.goBack();
 
     }
 
-    const goBack = (event) => {
+    const goBack = (event: React.SyntheticEvent) => {
         event.preventDefault();
         props.history.goBack();
     }
