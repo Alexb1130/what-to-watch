@@ -1,7 +1,7 @@
 import { observable, computed, action } from 'mobx';
 import RootStore from '@/store';
 import {AxiosInstance} from "axios";
-import {DEFAULT_GENRE} from '@/common/constants';
+import {DEFAULT_GENRE, FILMS_ROW_COUNT} from '@/constants';
 import {Movie} from '@/types';
 
 export default class {
@@ -11,23 +11,37 @@ export default class {
 
     @observable films: Array<Movie> = [];
     @observable promoFilm: Movie | null = null;
-    @observable filmsCopy: Array<Movie> = [];
-    @observable filmsAll: Array<Movie> = [];
-    @observable filteredFilms: Array<Movie> = [];
-    @observable isNoFilmsSelectedGenre: boolean = false;
     @observable currentFilm: Movie = null;
+    @observable currentFilmsRowCount: number = FILMS_ROW_COUNT;
+    @observable selectedGenre = DEFAULT_GENRE;
 
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
         this.api = this.rootStore.api;
     }
 
+    @computed get currentFilms() {
+        if(this.selectedGenre !== DEFAULT_GENRE) {
+            return this.films.filter(film => film.genre === this.selectedGenre);
+        }
+
+        return [...this.films]
+    }
+
+    updateFilmsCount(newCount: number) {
+        this.currentFilmsRowCount = newCount;
+    }
+
+    getCurrentFilm(films, id) {
+        return films.find(film => film.id.toString() === id);
+    }
+
+    changeSelectedGenre(genre) {
+        this.selectedGenre = genre;
+    }
+
     @action async getFilms() {
-        const films = (await this.api.get('films')).data;
-        this.films = films;
-        this.filmsCopy = [...films.slice(0, 8)];
-        this.filmsAll = [...films];
-        this.filmsAll.splice(0, 8);
+        this.films = (await this.api.get('films')).data;
     }
 
     @computed get currentPromoFilm() {
@@ -40,27 +54,5 @@ export default class {
 
     @action submitReview(id, reviewData) {
         return this.api.post(`/comments/${id}`, reviewData);
-    }
-
-    updateFilms() {
-        this.filmsCopy = [...this.filmsCopy, ...this.filmsAll.splice(0, 4)];
-    }
-
-    getCurrentFilm(films, id) {
-        return films.find(film => film.id.toString() === id);
-    }
-
-    filterByGenre(genre) {
-
-        if (!this.filteredFilms.length && genre !== DEFAULT_GENRE) {
-            this.isNoFilmsSelectedGenre = true;
-        }
-
-        if (genre === DEFAULT_GENRE) {
-            this.isNoFilmsSelectedGenre = false;
-            this.filteredFilms = [];
-        }
-
-        this.filteredFilms = this.films.filter(film => film.genre === genre);
     }
 }

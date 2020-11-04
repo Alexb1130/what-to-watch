@@ -1,6 +1,8 @@
-export const DEFAULT_GENRE = 'All genres';
+export const DEFAULT_GENRE: string = 'All genres';
 
-export const GENRES = [
+export const FILMS_ROW_COUNT: number = 8;
+
+export const GENRES: Array<string> = [
     'All genres',
     'Comedy',
     'Action',

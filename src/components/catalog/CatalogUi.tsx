@@ -2,7 +2,6 @@ import React from 'react';
 import GenresListUi from './GenresListUi';
 import MoviesListUi from './MoviesListUi';
 import ShowMoreBtn from './ShowMoreBtn';
-import PropTypes from 'prop-types';
 
 const CatalogUi = props => {
     const {similarList = false} = props;
@@ -22,10 +21,6 @@ const CatalogUi = props => {
         </section>
 
     )
-};
-
-CatalogUi.propTypes = {
-    similarList: PropTypes.bool
 };
 
 export default CatalogUi;
