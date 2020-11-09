@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
+import {Movie} from "@/types";
 
 const scrollToTop = () => {
     window.scrollTo({
@@ -9,7 +9,12 @@ const scrollToTop = () => {
     });
 };
 
-const MovieCardSmallUi = props => {
+interface Props {
+    movie: Movie
+    key?: number | string
+}
+
+const MovieCardSmallUi = (props: Props) => {
 
     const {movie} = props;
 
@@ -26,10 +31,5 @@ const MovieCardSmallUi = props => {
         </article>
     )
 }
-
-MovieCardSmallUi.propTypes = {
-    movie: PropTypes.object,
-    mouseEnterHandler: PropTypes.func
-};
 
 export default MovieCardSmallUi;

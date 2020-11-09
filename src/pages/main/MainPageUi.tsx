@@ -10,7 +10,7 @@ const MainPageUi = observer(() => {
 
     const {filmsStore} = useStore();
     const {userStore} = useStore();
-    const {currentPromoFilm} = filmsStore;
+    const {promoFilm} = filmsStore;
 
     const favoriteHandler = async id => {
         await userStore.updateFavorite(id);
@@ -24,7 +24,7 @@ const MainPageUi = observer(() => {
     return (
         <>
             <MovieCardBigUi
-                film={currentPromoFilm}
+                film={promoFilm}
                 favoriteHandler={favoriteHandler}
             />
             <div className="page-content">

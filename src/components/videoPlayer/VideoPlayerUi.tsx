@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
+import {Movie} from "@/types";
 
 const MINUTES_IN_HOUR = 60;
 const SECONDS_IN_MINUTE = 60;
 
-const getStringTime = (secValue = 0) => {
-    let hours = Math.floor(secValue / SECONDS_IN_MINUTE / MINUTES_IN_HOUR);
-    let minutes = Math.floor(secValue / SECONDS_IN_MINUTE % MINUTES_IN_HOUR);
-    let seconds = Math.floor(secValue % SECONDS_IN_MINUTE);
+const getStringTime = (secValue: number = 0): string => {
+    let hours: string | number = Math.floor(secValue / SECONDS_IN_MINUTE / MINUTES_IN_HOUR);
+    let minutes: string | number = Math.floor(secValue / SECONDS_IN_MINUTE % MINUTES_IN_HOUR);
+    let seconds: string | number = Math.floor(secValue % SECONDS_IN_MINUTE);
 
     if (minutes < 10) {
         minutes = `0${minutes}`;
@@ -21,7 +22,14 @@ const getStringTime = (secValue = 0) => {
     return `${hours}:${minutes}:${seconds}`;
 };
 
-class VideoPlayerUi extends React.Component {
+interface Props {
+    isStartPlaying: boolean,
+    exitPlayer: () => void,
+    film: Movie,
+    onPlayBtnClick?: () => void,
+}
+
+class VideoPlayerUi extends React.Component<Props> {
 
     _videoRef = React.createRef();
 
@@ -33,7 +41,7 @@ class VideoPlayerUi extends React.Component {
 
 
     componentDidMount() {
-        const video = this._videoRef.current;
+        const video: any = this._videoRef.current;
 
         video.addEventListener(`play`, this._handlePlay);
         video.addEventListener(`pause`, this._handlePause);
@@ -47,7 +55,7 @@ class VideoPlayerUi extends React.Component {
     }
 
     componentWillUnmount() {
-        const video = this._videoRef.current;
+        const video: any = this._videoRef.current;
 
         video.removeEventListener(`play`, this._handlePlay);
         video.removeEventListener(`pause`, this._handlePause);
@@ -74,7 +82,7 @@ class VideoPlayerUi extends React.Component {
 
         this._toggleVideoState();
 
-        this.setState((prevState) => ({
+        this.setState((prevState: any) => ({
             isPlaying: !prevState.isPlaying,
         }));
     }
@@ -84,13 +92,13 @@ class VideoPlayerUi extends React.Component {
     }
 
     _handleFullScreen() {
-        const video = this._videoRef.current;
+        const video: any = this._videoRef.current;
 
         video.controls = !!document.fullscreenElement;
     }
 
     _setTimeElapsed = () => {
-        const currentVideo = this._videoRef.current;
+        const currentVideo: any = this._videoRef.current;
 
         const duration = currentVideo.duration;
         const currentTimeValue = currentVideo.currentTime;
@@ -103,13 +111,13 @@ class VideoPlayerUi extends React.Component {
     }
 
     _setFullScreen = () => {
-        const video = this._videoRef.current;
+        const video: any = this._videoRef.current;
 
         video.requestFullscreen();
     }
 
     _toggleVideoState = () => {
-        const video = this._videoRef.current;
+        const video: any = this._videoRef.current;
         const {isPlaying} = this.state;
 
         if (isPlaying) {
@@ -119,7 +127,7 @@ class VideoPlayerUi extends React.Component {
         }
     }
 
-    _getVideoStyles() {
+    _getVideoStyles(): React.CSSProperties {
         return {
             width: `100%`,
             height: `100%`,
@@ -144,7 +152,7 @@ class VideoPlayerUi extends React.Component {
                         src={film.preview_video_link}
                         poster={`${film.preview_image}`}
                         style={this._getVideoStyles()}
-                        ref={this._videoRef}
+                        ref={this._videoRef as React.RefObject<HTMLVideoElement>}
                         loop
                         muted={true}>
                     </video>

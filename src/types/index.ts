@@ -25,6 +25,17 @@ export interface Movie {
     video_link: string
 }
 
+export interface Comment {
+    comment: string
+    date: Date
+    id: number
+    rating: number
+    user: {
+        id: string,
+        name: string
+    }
+}
+
 export enum FavoriteStatus {
     add = '1',
     remove = '0'

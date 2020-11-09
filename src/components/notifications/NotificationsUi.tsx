@@ -1,9 +1,10 @@
 import React from "react";
 import { observer } from "mobx-react";
 import { useStore } from "@/store";
-import styles from './notifications.module.css';
+import * as styles from './notifications.module.css';
 
-const NotificationsUi = () => {
+// @ts-ignore
+const NotificationsUi = observer(() => {
 
     const { notificationsStore } = useStore();
 
@@ -23,6 +24,6 @@ const NotificationsUi = () => {
             </div>
         ))
     )
-}
+})
 
-export default observer(NotificationsUi);
+export default NotificationsUi;

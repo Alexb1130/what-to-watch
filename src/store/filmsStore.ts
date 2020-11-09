@@ -2,7 +2,7 @@ import { observable, computed, action } from 'mobx';
 import RootStore from '@/store';
 import {AxiosInstance} from "axios";
 import {DEFAULT_GENRE, FILMS_ROW_COUNT} from '@/constants';
-import {Movie} from '@/types';
+import {Movie, Comment} from '@/types';
 
 export default class {
 
@@ -10,6 +10,7 @@ export default class {
     private api: AxiosInstance;
 
     @observable films: Array<Movie> = [];
+    @observable comments: Array<Comment> = [];
     @observable promoFilm: Movie | null = null;
     @observable currentFilm: Movie = null;
     @observable currentFilmsRowCount: number = FILMS_ROW_COUNT;
@@ -44,8 +45,8 @@ export default class {
         this.films = (await this.api.get('films')).data;
     }
 
-    @computed get currentPromoFilm() {
-        return this.promoFilm || {}
+    @action async getComments(id: string) {
+        this.comments = (await this.api.get(`/comments/${id}`)).data;
     }
 
     @action async getPromoFilm() {

@@ -6,7 +6,7 @@ import RootStore from '@/store';
 interface Notification {
     id?: number,
     message: string,
-    type: string
+    type?: string
 }
 
 class NotificationsStore {
@@ -25,7 +25,7 @@ class NotificationsStore {
         return [...this.notifications.values()];
     }
 
-    @action add({message, type = 'error'}: Notification, timeToAutoHide: number = 3000) {
+    @action add(message: string, type: string = 'error', timeToAutoHide: number = 3000) {
         this.notifications.set(++this._defaultNotificationID, {
             id: this._defaultNotificationID,
             message,
