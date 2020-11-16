@@ -1,10 +1,16 @@
+import {Movie} from '@/types';
 import React from 'react';
 import GenresListUi from './GenresListUi';
 import MoviesListUi from './MoviesListUi';
 import ShowMoreBtn from './ShowMoreBtn';
 
-const CatalogUi = props => {
-    const {similarList = false} = props;
+interface Props {
+    films: Movie[],
+    similarList?: boolean
+}
+
+const CatalogUi = (props: Props) => {
+    const {films, similarList = false} = props;
 
     return (
         <section className={`catalog ${similarList ? 'catalog--like-this': ''}`}>
@@ -15,7 +21,7 @@ const CatalogUi = props => {
 
             {!similarList && <GenresListUi />}
 
-            <MoviesListUi />
+            <MoviesListUi films={films} />
 
             {!similarList && <ShowMoreBtn />}
         </section>

@@ -11,6 +11,7 @@ const MainPageUi = observer(() => {
     const {filmsStore} = useStore();
     const {userStore} = useStore();
     const {promoFilm} = filmsStore;
+    const {currentFilms, currentFilmsRowCount} = filmsStore;
 
     const favoriteHandler = async id => {
         await userStore.updateFavorite(id);
@@ -28,7 +29,9 @@ const MainPageUi = observer(() => {
                 favoriteHandler={favoriteHandler}
             />
             <div className="page-content">
-                <CatalogUi />
+                <CatalogUi
+                    films={currentFilms.slice(0, currentFilmsRowCount)}
+                />
                 <FooterUi />
             </div>
         </>

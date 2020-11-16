@@ -20,9 +20,9 @@ const MoviePageUi = withRouter(observer((props: RouteComponentProps) => {
 
     const {match} = props;
     const {isAuthorizationRequired} = authorizationStore;
-    const {films, getCurrentFilm} = filmsStore;
+    const {films, getCurrentFilm, getSimilarFilms} = filmsStore;
     const currentFilm = getCurrentFilm(films, match.params.id);
-    const similarFilms = films.filter(film => film.genre === currentFilm.genre);
+    const similarFilms = getSimilarFilms(currentFilm);
 
     return (
         <>
@@ -34,10 +34,7 @@ const MoviePageUi = withRouter(observer((props: RouteComponentProps) => {
             />
             {currentFilm &&
                 <div className="page-content">
-                    <CatalogUi
-                        films={similarFilms}
-                        similarList={true}
-                    />
+                    <CatalogUi films={similarFilms} similarList={true} />
                     <FooterUi/>
                 </div>
             }

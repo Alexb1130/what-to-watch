@@ -29,6 +29,10 @@ export default class {
         return [...this.films]
     }
 
+    getSimilarFilms = (currentFilm: Movie) => {
+        return this.films.filter((film) => film.genre === currentFilm.genre);
+    }
+
     updateFilmsCount(newCount: number) {
         this.currentFilmsRowCount = newCount;
     }

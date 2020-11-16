@@ -1,8 +1,8 @@
-import React, {ReactNode} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {Movie} from "@/types";
 
-const MINUTES_IN_HOUR = 60;
-const SECONDS_IN_MINUTE = 60;
+const MINUTES_IN_HOUR: number = 60;
+const SECONDS_IN_MINUTE: number = 60;
 
 const getStringTime = (secValue: number = 0): string => {
     let hours: string | number = Math.floor(secValue / SECONDS_IN_MINUTE / MINUTES_IN_HOUR);
@@ -29,96 +29,85 @@ interface Props {
     onPlayBtnClick?: () => void,
 }
 
-class VideoPlayerUi extends React.Component<Props> {
+const VideoPlayerUi = (props: Props) => {
+    const [isPlaying, setIsPlaying] = useState<boolean>(props.isStartPlaying || false)
+    const [percentProgress, setPercentProgress] = useState<number>(0)
+    const [timeElapsed, setTimeElapsed] = useState<number>(0);
+    const { onPlayBtnClick, film } = props;
 
-    _videoRef = React.createRef();
+    const videoRef = useRef(null);
 
-    state = {
-        isPlaying: this.props.isStartPlaying || false,
-        percentProgress: 0,
-        timeElapsed: 0,
-    };
+    useEffect(() => {
+        const video: any = videoRef.current;
 
+        video.addEventListener(`play`, handlePlay);
+        video.addEventListener(`pause`, handlePause);
+        video.addEventListener(`timeupdate`, handleTimeUpdate);
+        video.addEventListener(`fullscreenchange`, handleFullScreen);
 
-    componentDidMount() {
-        const video: any = this._videoRef.current;
-
-        video.addEventListener(`play`, this._handlePlay);
-        video.addEventListener(`pause`, this._handlePause);
-        video.addEventListener(`timeupdate`, this._handleTimeUpdate);
-        video.addEventListener(`fullscreenchange`, this._handleFullScreen);
-
-        if (this.props.isStartPlaying) {
+        if (props.isStartPlaying) {
             video.play();
-            return;
         }
-    }
 
-    componentWillUnmount() {
-        const video: any = this._videoRef.current;
+        return () => {
+            video.removeEventListener(`play`, handlePlay);
+            video.removeEventListener(`pause`, handlePause);
+            video.removeEventListener(`timeupdate`, handleTimeUpdate);
+            video.removeEventListener(`fullscreenchange`, handleFullScreen);
+        }
+    }, [videoRef])
 
-        video.removeEventListener(`play`, this._handlePlay);
-        video.removeEventListener(`pause`, this._handlePause);
-        video.removeEventListener(`timeupdate`, this._handleTimeUpdate);
-        video.removeEventListener(`fullscreenchange`, this._handleFullScreen);
-    }
-
-    _exitPlayer = () => {
-        this.props.exitPlayer();
+    function exitPlayer() {
+        props.exitPlayer();
     };
 
-    _handlePlay = () => {
-        this.setState({isPlaying: true});
+    function handlePlay() {
+        setIsPlaying(true);
     }
 
-    _handlePause = () => {
-        this.setState({isPlaying: false});
+    function handlePause() {
+        setIsPlaying(false);
     }
 
-    _handlePlayBtnClick = () => {
+    function handlePlayBtnClick() {
         if (document.fullscreenElement) {
             return;
         }
 
-        this._toggleVideoState();
+        toggleVideoState();
 
-        this.setState((prevState: any) => ({
-            isPlaying: !prevState.isPlaying,
-        }));
+        setIsPlaying((prevState) => !prevState);
     }
 
-    _handleTimeUpdate = () => {
-        this._setTimeElapsed();
+    function handleTimeUpdate() {
+        updateTimeElapsed();
     }
 
-    _handleFullScreen() {
-        const video: any = this._videoRef.current;
+    function handleFullScreen() {
+        const video: any = videoRef.current;
 
         video.controls = !!document.fullscreenElement;
     }
 
-    _setTimeElapsed = () => {
-        const currentVideo: any = this._videoRef.current;
+    function updateTimeElapsed() {
+        const currentVideo: any = videoRef.current;
 
         const duration = currentVideo.duration;
         const currentTimeValue = currentVideo.currentTime;
         const percentProgress = +(currentTimeValue * 100 / duration).toFixed(2);
 
-        this.setState({
-            timeElapsed: Math.floor(duration - currentTimeValue),
-            percentProgress,
-        });
+        setTimeElapsed(Math.floor(duration - currentTimeValue))
+        setPercentProgress(percentProgress)
     }
 
-    _setFullScreen = () => {
-        const video: any = this._videoRef.current;
+    function setFullScreen() {
+        const video: any = videoRef.current;
 
         video.requestFullscreen();
     }
 
-    _toggleVideoState = () => {
-        const video: any = this._videoRef.current;
-        const {isPlaying} = this.state;
+    function toggleVideoState() {
+        const video: any = videoRef.current;
 
         if (isPlaying) {
             video.pause();
@@ -127,7 +116,7 @@ class VideoPlayerUi extends React.Component<Props> {
         }
     }
 
-    _getVideoStyles(): React.CSSProperties {
+    function getVideoStyles(): React.CSSProperties {
         return {
             width: `100%`,
             height: `100%`,
@@ -135,71 +124,64 @@ class VideoPlayerUi extends React.Component<Props> {
         };
     }
 
-    render() {
+    return (
 
-        const { onPlayBtnClick, film } = this.props;
+        <div className="player" style={{zIndex: 1000}}>
+            <div className="player__video-wrap" onClick={onPlayBtnClick}>
+                <video
+                    className="small-movie-card__video-preview"
+                    autoPlay
+                    playsInline
+                    src={film.preview_video_link}
+                    poster={`${film.preview_image}`}
+                    style={getVideoStyles()}
+                    ref={videoRef as React.RefObject<HTMLVideoElement>}
+                    loop
+                    muted={true}>
+                </video>
+            </div>
 
-        const { isPlaying, timeElapsed, percentProgress} = this.state;
+            <button type="button" className="player__exit" style={{zIndex: 2000}} onClick={exitPlayer}>Exit</button>
 
-        return (
-
-            <div className="player" style={{zIndex: 1000}}>
-                <div className="player__video-wrap" onClick={onPlayBtnClick}>
-                    <video
-                        className="small-movie-card__video-preview"
-                        autoPlay
-                        playsInline
-                        src={film.preview_video_link}
-                        poster={`${film.preview_image}`}
-                        style={this._getVideoStyles()}
-                        ref={this._videoRef as React.RefObject<HTMLVideoElement>}
-                        loop
-                        muted={true}>
-                    </video>
+            <div className="player__controls" style={{zIndex: 2000}}>
+                <div className="player__controls-row">
+                    <div className="player__time">
+                        <progress className="player__progress" value={percentProgress} max="100"/>
+                        <div className="player__toggler" style={{left: `${percentProgress}%`}}>Toggler</div>
+                    </div>
+                    <div className="player__time-value">{getStringTime(timeElapsed)}</div>
                 </div>
 
-                <button type="button" className="player__exit" style={{zIndex: 2000}} onClick={this._exitPlayer}>Exit</button>
+                <div className="player__controls-row">
+                    <button type="button" className="player__play" onClick={handlePlayBtnClick}>
+                        {isPlaying
+                            ? <>
+                                <svg viewBox="0 0 14 21" width="14" height="21">
+                                    <use xlinkHref="#pause"/>
+                                </svg>
+                                <span>Pause</span>
+                            </>
+                            : <>
+                                <svg viewBox="0 0 19 19" width="19" height="19">
+                                    <use xlinkHref="#play-s"/>
+                                </svg>
+                                <span>Play</span>
+                            </>
+                        }
+                    </button>
 
-                <div className="player__controls" style={{zIndex: 2000}}>
-                    <div className="player__controls-row">
-                        <div className="player__time">
-                            <progress className="player__progress" value={percentProgress} max="100"/>
-                            <div className="player__toggler" style={{left: `${percentProgress}%`}}>Toggler</div>
-                        </div>
-                        <div className="player__time-value">{getStringTime(timeElapsed)}</div>
-                    </div>
+                    <div className="player__name">{film.name}</div>
 
-                    <div className="player__controls-row">
-                        <button type="button" className="player__play" onClick={this._handlePlayBtnClick}>
-                            {isPlaying
-                                ? <>
-                                    <svg viewBox="0 0 14 21" width="14" height="21">
-                                        <use xlinkHref="#pause"/>
-                                    </svg>
-                                    <span>Pause</span>
-                                </>
-                                : <>
-                                    <svg viewBox="0 0 19 19" width="19" height="19">
-                                        <use xlinkHref="#play-s"/>
-                                    </svg>
-                                    <span>Play</span>
-                                </>
-                            }
-                        </button>
-
-                        <div className="player__name">{film.name}</div>
-
-                        <button type="button" className="player__full-screen" onClick={this._setFullScreen}>
-                            <svg viewBox="0 0 27 27" width="27" height="27">
-                                <use xlinkHref="#full-screen"/>
-                            </svg>
-                            <span>Full screen</span>
-                        </button>
-                    </div>
+                    <button type="button" className="player__full-screen" onClick={setFullScreen}>
+                        <svg viewBox="0 0 27 27" width="27" height="27">
+                            <use xlinkHref="#full-screen"/>
+                        </svg>
+                        <span>Full screen</span>
+                    </button>
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default VideoPlayerUi;
