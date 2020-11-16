@@ -10,7 +10,6 @@ const GenresListUi = observer(() => {
 
     const clickHandler = (event: React.MouseEvent<HTMLAnchorElement>, genre: string) => {
         event.preventDefault();
-        setSelectedGenre(genre);
         filmsStore.changeSelectedGenre(genre);
     }
 
