@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {observer} from "mobx-react";
 import {GENRES, DEFAULT_GENRE} from '@/constants';
 import {useStore} from '@/store';
@@ -13,6 +13,10 @@ const GenresListUi = observer(() => {
         setSelectedGenre(genre);
         filmsStore.changeSelectedGenre(genre);
     }
+
+    useEffect(() => {
+        setSelectedGenre(filmsStore.selectedGenre);
+    }, [filmsStore.selectedGenre])
 
     return (
         <ul className="catalog__genres-list">
