@@ -1,6 +1,13 @@
 import React from 'react';
+import { TabList } from '@/types';
 
-const Tabs = (props) => {
+interface Props {
+    tabs: TabList[],
+    currentTab: string,
+    clickHandler: (e: React.MouseEvent, tab: string) => void
+}
+
+const Tabs = (props: Props) => {
 
     const {tabs, currentTab, clickHandler} = props;
 

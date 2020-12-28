@@ -1,27 +1,26 @@
 import React from 'react';
-import {useStore} from "@/store";
-import {observer} from "mobx-react";
-import {withRouter} from "react-router-dom";
-import {RouteComponentProps} from "react-router";
+import { useStore } from "@/store";
+import { observer } from "mobx-react";
+import { useParams } from "react-router-dom";
 import CatalogUi from '@/components/catalog/CatalogUi';
 import FooterUi from "@/components/footer/FooterUi";
 import MovieCardBigUi from "@/components/movieCards/MovieCardBigUi";
 
-const MoviePageUi = withRouter(observer((props: RouteComponentProps) => {
+const MoviePageUi = observer(() => {
 
-    const {filmsStore} = useStore();
-    const {userStore} = useStore();
-    const {authorizationStore} = useStore();
+    const { filmsStore } = useStore();
+    const { userStore } = useStore();
+    const { authorizationStore } = useStore();
+    const { id } = useParams();
 
     const favoriteHandler = async id => {
         await userStore.updateFavorite(id);
         await filmsStore.getFilms();
     }
 
-    const {match} = props;
-    const {isAuthorizationRequired} = authorizationStore;
-    const {films, getCurrentFilm, getSimilarFilms} = filmsStore;
-    const currentFilm = getCurrentFilm(films, match.params.id);
+    const { isAuthorizationRequired } = authorizationStore;
+    const { films, getCurrentFilm, getSimilarFilms } = filmsStore;
+    const currentFilm = getCurrentFilm(films, id);
     const similarFilms = getSimilarFilms(currentFilm);
 
     return (
@@ -35,11 +34,11 @@ const MoviePageUi = withRouter(observer((props: RouteComponentProps) => {
             {currentFilm &&
                 <div className="page-content">
                     <CatalogUi films={similarFilms} similarList={true} />
-                    <FooterUi/>
+                    <FooterUi />
                 </div>
             }
         </>
     )
-}))
+})
 
 export default MoviePageUi;

@@ -1,36 +1,36 @@
 import React  from 'react';
 import {observer} from "mobx-react";
-import {withRouter} from 'react-router-dom';
-import {RouteComponentProps} from "react-router";
+import { useParams, useHistory } from 'react-router-dom';
 import {useStore} from '@/store';
 import UserBlock from '@/components/userBlock/UserBlockUi';
 
-const AddReview = withRouter(observer((props: RouteComponentProps) => {
+const AddReview = observer(() => {
 
     const {filmsStore} = useStore();
+    const history = useHistory();
+    const { id: filmId } = useParams();
 
     const onSubmitReview = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const form = event.target as HTMLFormElement;
-        const filmId = props.match.params.id;
         const reviewData = {
             rating: parseInt(form.elements['rating'].value, 10),
             comment: form.elements['review-text'].value
         }
 
         await filmsStore.submitReview(filmId, reviewData);
-        await props.history.goBack();
+        history.goBack();
 
     }
 
     const goBack = (event: React.SyntheticEvent) => {
         event.preventDefault();
-        props.history.goBack();
+        history.goBack();
     }
 
     const {films, getCurrentFilm} = filmsStore;
-    const currentFilm = getCurrentFilm(films, props.match.params.id);
+    const currentFilm = getCurrentFilm(films, filmId);
 
     if(!currentFilm) {
         return <h1>Loading...</h1>
@@ -111,6 +111,6 @@ const AddReview = withRouter(observer((props: RouteComponentProps) => {
 
         </section>
     )
-}))
+})
 
 export default AddReview;

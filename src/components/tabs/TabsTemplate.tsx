@@ -3,16 +3,15 @@ import Tabs from './Tabs';
 import TabOverview from './TabOverview';
 import TabDetails from './TabDetails';
 import TabReviews from './TabReviews';
+import { TabList } from '@/types';
 
-type tabList = 'Overview' | 'Details' | 'Reviews';
-
-const TAB_LIST: Array<tabList> = [ 'Overview', 'Details', 'Reviews']
+const TAB_LIST: TabList[] = [ 'Overview', 'Details', 'Reviews']
 
 const TabTemplate = (props) => {
     const [currentTab, setCurrentTab] = useState<string>(TAB_LIST[0])
     const {film} = props;
 
-    const tabClickHandler = (event: React.MouseEvent<HTMLAnchorElement>, name: tabList) => {
+    const tabClickHandler = (event: React.MouseEvent<HTMLAnchorElement>, name: TabList) => {
         event.preventDefault();
         setCurrentTab(name)
     }
@@ -23,7 +22,7 @@ const TabTemplate = (props) => {
             {
                 currentTab === 'Overview' && <TabOverview film={film} />
                 || currentTab === 'Details' && <TabDetails film={film} />
-                || currentTab === 'Reviews' && <TabReviews film={film} />
+                || currentTab === 'Reviews' && <TabReviews />
             }
         </div>
     )

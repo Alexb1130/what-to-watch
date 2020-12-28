@@ -1,19 +1,19 @@
-import React, {useEffect} from 'react';
-import {withRouter} from 'react-router-dom';
-import {RouteComponentProps} from "react-router";
-import moment from 'moment';
-import {observer} from "mobx-react";
-import {useStore} from "@/store";
-import {Comment} from "@/types";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
+import { observer } from "mobx-react";
+import { useStore } from "@/store";
+import { Comment } from "@/types";
 
-const TabReviews = withRouter(observer((props: RouteComponentProps) => {
-    const {filmsStore} = useStore();
-    const {comments} = filmsStore;
-    const {id} = props.match.params;
+const TabReviews = observer(() => {
+    const { filmsStore } = useStore();
+    const { comments } = filmsStore;
+    const { id } = useParams();
 
     useEffect(() => {
         filmsStore.getComments(id)
-    }, [comments])
+    }, [id])
 
     const renderCol = (comments: Array<Comment>): Array<JSX.Element> => {
         return comments.map((commentItem: Comment) => (
@@ -24,7 +24,7 @@ const TabReviews = withRouter(observer((props: RouteComponentProps) => {
                     <footer className="review__details">
                         <cite className="review__author">{commentItem.user.name}</cite>
                         <time className="review__date" dateTime="2016-12-24">
-                            {moment(commentItem.date).format('MMMM D, YYYY')}
+                            {format(parseISO(commentItem.date.toString()), 'MMMM d, yyyy')}
                         </time>
                     </footer>
                 </blockquote>
@@ -47,6 +47,6 @@ const TabReviews = withRouter(observer((props: RouteComponentProps) => {
             </div>
         </div>
     )
-}))
+})
 
 export default TabReviews;

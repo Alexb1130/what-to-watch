@@ -1,6 +1,5 @@
 const path = require('path');
 const publicPath = path.join(__dirname, 'public');
-const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
@@ -62,7 +61,6 @@ module.exports = {
     },
     devtool: 'source-maps',
     plugins: [
-        new MomentLocalesPlugin(),
         new MiniCssExtractPlugin({
             filename: '[name].css'
         }),

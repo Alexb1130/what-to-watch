@@ -1,14 +1,13 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import Logo from "@/components/logo/Logo";
 import FooterUi from "@/components/footer/FooterUi";
-import {withRouter} from 'react-router-dom';
-import {RouteComponentProps} from "react-router";
-import {useStore} from '@/store';
+import { useHistory } from 'react-router-dom';
+import { useStore } from '@/store';
 
-const SignIn = withRouter((props: RouteComponentProps) => {
+const SignIn = () => {
 
-    const {history} = props;
-    const {authorizationStore} = useStore();
+    const history = useHistory();
+    const { authorizationStore } = useStore();
 
     const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -34,7 +33,7 @@ const SignIn = withRouter((props: RouteComponentProps) => {
         <div className="user-page">
             <header className="page-header user-page__head">
 
-                <Logo/>
+                <Logo />
 
                 <h1 className="page-title user-page__title">Sign in</h1>
             </header>
@@ -44,21 +43,21 @@ const SignIn = withRouter((props: RouteComponentProps) => {
                     <div className="sign-in__fields">
                         <div className="sign-in__field">
                             <input className="sign-in__input" type="email" placeholder="Email address"
-                                   name="user-email"
-                                   id="user-email"
-                                   required
+                                name="user-email"
+                                id="user-email"
+                                required
                             />
                             <label className="sign-in__label visually-hidden" htmlFor="user-email">Email
                                 address</label>
                         </div>
                         <div className="sign-in__field">
                             <input className="sign-in__input" type="password" placeholder="Password"
-                                   name="user-password"
-                                   id="user-password"
-                                   required
+                                name="user-password"
+                                id="user-password"
+                                required
                             />
                             <label className="sign-in__label visually-hidden"
-                                   htmlFor="user-password">Password</label>
+                                htmlFor="user-password">Password</label>
                         </div>
                     </div>
                     <div className="sign-in__submit">
@@ -67,9 +66,9 @@ const SignIn = withRouter((props: RouteComponentProps) => {
                 </form>
             </div>
 
-            <FooterUi/>
+            <FooterUi />
         </div>
     )
-})
+}
 
 export default SignIn;

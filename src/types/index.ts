@@ -40,3 +40,5 @@ export enum FavoriteStatus {
     add = '1',
     remove = '0'
 }
+
+export type TabList = 'Overview' | 'Details' | 'Reviews';
