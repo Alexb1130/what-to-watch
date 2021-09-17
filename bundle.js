@@ -43782,7 +43782,7 @@ const App = mobx_react_1.observer(() => {
     react_1.useEffect(() => {
         filmsStore.getFilms();
     }, []);
-    return (react_1.default.createElement(react_router_dom_1.HashRouter, null,
+    return (react_1.default.createElement(react_router_dom_1.BrowserRouter, null,
         react_1.default.createElement(NotificationsUi_1.default, null),
         react_1.default.createElement(react_router_dom_1.Switch, null,
             react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: "/", component: MainPageUi_1.default }),
